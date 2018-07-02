@@ -424,28 +424,20 @@ This (probably) is the docking operation that greatly speeds up an entity's move
 ---
 
 ## BFBehDockQueue
+This docks guests to a queue in front of a building.
 #### Attributes:
-- __container__ (_string_) - (foodprop, head_inventory, lefthandobject, mouth, righthand),
-- __hitRadius__ (_int_) - (2, 3, 5, 6, 8),
-- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
-- __queueRadius__ (_int_) - (12),
+- * __container__ (_string_) - Name of the queue container.
+- __hitRadius__ (_int_) - Distance to enter the queue.
+- __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
+- __queueRadius__ (_int_) - Size of the queue.
 #### Children:
 - None
 
----
 
-## BFBehDockRadial
-#### Attributes:
-- __dockRadius__ (_float_) - (.3, .4, .5, .6, .8),
-- __interpolationDistance__ (_float_) - (0.15, 0.5, 1, 2, 9.0),
-- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
-- __rotError__ (_int_) - (180, 22.5),
-- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
-- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
-- __targetNode__ (_string_) - (Dock_Attach, p_FightOffset, p_NurseNode, p_PredatorOffset, p_PreyOffset),
-- __targetRadius__ (_int_) - (1, 2, 3, 4, 6),
-#### Children:
-- None
+#### Example:
+```xml
+ <BFBehDockQueue hitRadius="2.5" queueRadius="12" locoSpeed="slow"/>
+```
 
 ---
 
@@ -460,21 +452,6 @@ Docks an entity exactly according to subject's dock nodes, ignoring the rotation
 - * __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
 - * __dockRadius__ (_float_) - 
 - * __interpolationDistance__ (_float_) - ?
-#### Children:
-- None
-
----
-
-## BFBehDockSpline
-#### Attributes:
-- __ignoreCollisionWithTarget__ (_bool_) - (false),
-- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
-- __locospeed__ (_string_) - (fast, medium, slow),
-- __redock__ (_bool_) - (false, true),
-- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
-- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
-- __targetNode__ (_string_) - (Dock_Attach, p_FightOffset, p_NurseNode, p_PredatorOffset, p_PreyOffset),
-- __useBuoyNodes__ (_bool_) - (false),
 #### Children:
 - None
 
@@ -496,16 +473,6 @@ Docks usin spline interpolation, in 3D?
 ---
 
 ## BFBehDockTAP
-#### Attributes:
-- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
-- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
-- __targetTAP__ (_string_) - (Bip01_DockNode01_BaseA2Branch1AEnd, Bip01_DockNode03_BaseB2Branch1BEnd, Bip01_DockNode05_BaseC2Branch1CEnd, Bip01_DockNode07_BaseD2Branch1DEnd, Bip01_DockNode09_BaseE2Branch1EEnd),
-#### Children:
-- None
-
----
-
-## BFBehDockTAP
 Starts a TAP interaction, is followed by [BFBehAnimateTAP](#bfbehanimatetap).
 #### Attributes:
 - __subjectNode__ (_string_) - Name of the subject's dock node, eg. `Node_Mouth`, `Floor`...
@@ -517,11 +484,17 @@ Starts a TAP interaction, is followed by [BFBehAnimateTAP](#bfbehanimatetap).
 ---
 
 ## BFBehEnter
+Used to initiate interaction with a building; generally followed by a `useContainer` behSet.
 #### Attributes:
 - None
 #### Children:
 - None
 
+#### Example:
+```xml
+ <BFBehEnter/>
+ <BFBehPlaySet behSet="useContainer"/>
+```xml
 ---
 
 ## BFBehEscapeObstacle
@@ -534,35 +507,13 @@ Starts a TAP interaction, is followed by [BFBehAnimateTAP](#bfbehanimatetap).
 
 ---
 
-## BFBehEscapeObstacle
-#### Attributes:
-- __escapeRadius__ (_int_) - (5),
-- __escapeTime__ (_int_) - (20, 5),
-- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
-#### Children:
-- None
-
----
-
-## BFBehEvasion
-#### Attributes:
-- __avoidLand__ (_bool_) - (true),
-- __avoidObstacleRadius__ (_int_) - (2, 3, 5, 6),
-- __avoidWater__ (_bool_) - (true),
-- __evasionRadius__ (_int_) - (10, 12, 15, 25, 30),
-- __evasionTime__ (_int_) - (10, 15, 60),
-- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
-#### Children:
-- [avoidEntityTypes](#avoidentitytypes)
-
----
-
 ## BFBehEvasion
 Directed motion fleeing from a target, optionally avoiding third-party entities given in [avoidEntityTypes](#avoidentitytypes).
 #### Attributes:
 - __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
 - __evasionRadius__ (_int_) - Minimal distance between subject and target to stop evading.
 - __evasionTime__ (_int_) - How much time should be spent evading the target?
+- * __avoidObstacleRadius__ (_int_) - How much distance should be kept between the subject and obstacles?
 - * __avoidWater__ (_bool_) - Should the entity try to stay on land? Default is `false`.
 - * __avoidLand__ (_bool_) - Should the entity try to stay in water? Default is `false`.
 #### Children:
@@ -571,6 +522,7 @@ Directed motion fleeing from a target, optionally avoiding third-party entities 
 ---
 
 ## BFBehExecTask
+The TSK equivalent to the BEH's [behaviors](#behaviors) container. Can use more or less the same functions.
 #### Attributes:
 - None
 #### Children:
@@ -629,53 +581,8 @@ Directed motion fleeing from a target, optionally avoiding third-party entities 
 
 ---
 
-## BFBehExecTask
-The TSK equivalent to the BEH's [behaviors](#behaviors) container. Can use more or less the same functions.
-#### Attributes:
-- None
-#### Children:
-- [BFAISubjectData](#bfaisubjectdata)
-- [BFBehAnimate](#bfbehanimate)
-- [BFBehAnimateRandom](#bfbehanimaterandom)
-- [BFBehDock](#bfbehdock)
-- [BFBehDockRadial](#bfbehdockradial)
-- [BFBehDockSpline](#bfbehdockspline)
-- [BFBehEnter](#bfbehenter)
-- [BFBehEscapeObstacle](#bfbehescapeobstacle)
-- [BFBehEvasion](#bfbehevasion)
-- [BFBehFaceTarget](#bfbehfacetarget)
-- [BFBehFall](#bfbehfall)
-- [BFBehHeadLook](#bfbehheadlook)
-- [BFBehKill](#bfbehkill)
-- [BFBehLocoSwitchSet](#bfbehlocoswitchset)
-- [BFBehMove](#bfbehmove)
-- [BFBehPlaySet](#bfbehplayset)
-- [BFBehPursuit](#bfbehpursuit)
-- [BFBehRandomSet](#bfbehrandomset)
-- [BFBehScript](#bfbehscript)
-- [BFBehSendToken](#bfbehsendtoken)
-- [BFBehSetAttribute](#bfbehsetattribute)
-- [BFBehSpawn](#bfbehspawn)
-- [BFBehSyncSet](#bfbehsyncset)
-- [BFBehWander](#bfbehwander)
-- [ZTBehAddSubjectAsDiseaseTarget](#ztbehaddsubjectasdiseasetarget)
-- [ZTBehChangeWaterDirtiness](#ztbehchangewaterdirtiness)
-- [ZTBehDockFence](#ztbehdockfence)
-- [ZTBehDockTankWall](#ztbehdocktankwall)
-- [ZTBehDockWater](#ztbehdockwater)
-- [ZTBehEconomy](#ztbeheconomy)
-- [ZTBehFeedback](#ztbehfeedback)
-- [ZTBehKickOffRider](#ztbehkickoffrider)
-- [ZTBehMorph](#ztbehmorph)
-- [ZTBehStaffTrainAnimal](#ztbehstafftrainanimal)
-- [ZTBehTargetFence](#ztbehtargetfence)
-- [ZTBehTeleportToLoc](#ztbehteleporttoloc)
-- [ZTBehUsePortal](#ztbehuseportal)
-- [ZTBehViewEvent](#ztbehviewevent)
-
----
-
 ## BFBehExit
+Used to terminate interaction with a building; apparently not necessarily used after [BFBehEnter](#bfbehenter).
 #### Attributes:
 - __exitBehSet__ (_string_) - (ExitBench, ExitGrandstand, ExitTrashContainer),
 #### Children:
@@ -684,17 +591,9 @@ The TSK equivalent to the BEH's [behaviors](#behaviors) container. Can use more 
 ---
 
 ## BFBehFaceTarget
-#### Attributes:
-- __rotError__ (_int_) - (180, 22.5),
-#### Children:
-- None
-
----
-
-## BFBehFaceTarget
 Makes the subject face its target, preferably by playing the appropriate turning animations.
 #### Attributes:
-- None
+- * __rotError__ (_int_) - (180, 22.5),
 #### Children:
 - None
 
@@ -703,18 +602,6 @@ Makes the subject face its target, preferably by playing the appropriate turning
 ## BFBehFall
 #### Attributes:
 - None
-#### Children:
-- None
-
----
-
-## BFBehFollowEntity
-#### Attributes:
-- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
-- __maxPlayTime__ (_int_) - (10, 15, 20, 6, 7),
-- __minPlayTime__ (_int_) - (10, 3, 4, 5, 7),
-- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
-- __targetNode__ (_string_) - (Dock_Attach, p_FightOffset, p_NurseNode, p_PredatorOffset, p_PreyOffset),
 #### Children:
 - None
 
@@ -734,18 +621,10 @@ Makes the subject follow the target.
 ---
 
 ## BFBehHeadLook
-#### Attributes:
-- __disengage__ (_bool_) - (true),
-- __targetNode__ (_string_) - (Dock_Attach, p_FightOffset, p_NurseNode, p_PredatorOffset, p_PreyOffset),
-#### Children:
-- None
-
----
-
-## BFBehHeadLook
 Toggles the secondary headlook component in the XML.
 #### Attributes:
 - __disengage__ (_bool_) Turns it off again. Default is `false`.
+- __targetNode__ (_string_) - Apparently which node in the target to look at.
 #### Children:
 - None
 
@@ -755,20 +634,6 @@ Toggles the secondary headlook component in the XML.
 #### Attributes:
 - __maxTime__ (_int_) - (1, 20, 8),
 - __minTime__ (_int_) - (1, 15, 4),
-#### Children:
-- None
-
----
-
-## BFBehKill
-#### Attributes:
-- __fadeOutPeriod__ (_int_) - (1, 2, 3, 4, 5),
-- __killSubject__ (_bool_) - (true),
-- __killTarget__ (_bool_) - (true),
-- __killUsingDestroyEntity__ (_bool_) - (true),
-- __radius__ (_int_) - (20, 3, 30, 5, 6),
-- __radiusKillType__ (_string_) - (ShakerToy_Open, fence),
-- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
 #### Children:
 - None
 
@@ -791,14 +656,6 @@ Deletes entities, optionally fading them out.
 ```xml
  <BFBehKill targetAnim="Stand_BashFence" killTarget="true" radius="5" radiusKillType="fence" fadeOutPeriod="1" killUsingDestroyEntity="true"/>
 ```
-
----
-
-## BFBehLocoSwitchSet
-#### Attributes:
-- __switch__ (_bool_) - (false),
-#### Children:
-- [behaviorTable](#behaviortable)
 
 ---
 
@@ -837,34 +694,6 @@ May switch between different behSets according to the location the subject entit
 
 ---
 
-## BFBehMove
-#### Attributes:
-- __closestApproach__ (_bool_) - (true),
-- __depthAboveBottom__ (_int_) - (1, LE 1, LE 3),
-- __depthBelowSurface__ (_int_) - (0, 12, 4, G 1, GE 2),
-- __heightAboveFloor__ (_float_) - (0, 0.1, 0.3, 0.5, 1.5),
-- __hitRadius__ (_int_) - (2, 3, 5, 6, 8),
-- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
-- __moveRadius__ (_int_) - (1, 1000, 3, 5, 6),
-- __pathRadius__ (_float_) - (0, 10, 3, 3.0, 7),
-- __targetNode__ (_string_) - (Dock_Attach, p_FightOffset, p_NurseNode, p_PredatorOffset, p_PreyOffset),
-#### Children:
-- None
-
----
-
-## BFBehPlaySet
-#### Attributes:
-- __behSet__ (_string_) - (Bleat, Dig, DustBathe, FailureSet, TreadWater_Idle),
-- __interruptEvent__ (_string_) - (collideWithTarget),
-- __interruptFlag__ (_bool_) - (false, true),
-- __loopFlag__ (_bool_) - (true),
-- __playTime__ (_int_) - (10, 2, 20, 35, 8),
-#### Children:
-- None
-
----
-
 ## BFBehPlaySet
 Very generic function that simply plays back another behSet.
 #### Attributes:
@@ -884,18 +713,6 @@ Very generic function that simply plays back another behSet.
 ---
 
 ## BFBehPursuit
-#### Attributes:
-- __failureRadius__ (_int_) - (1000, 600, 80),
-- __hitRadius__ (_int_) - (2, 3, 5, 6, 8),
-- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
-- __pollFreq__ (_float_) - (0.1),
-- __pursuitRadius__ (_int_) - (15, 20, 30, 6, 9),
-#### Children:
-- None
-
----
-
-## BFBehPursuit
 Chases the target and stops when the subject has reached it.
 #### Attributes:
 - __hitRadius__ (_int_) - The maximum distance between subject and target for the pursuit to stop.
@@ -909,17 +726,6 @@ Chases the target and stops when the subject has reached it.
 ---
 
 ## BFBehRandomSet
-#### Attributes:
-- __loopFlag__ (_bool_) - (true),
-- __maxPlays__ (_int_) - (1, 3, 4, 6, 7),
-- __minPlays__ (_int_) - (1, 2, 3, 4, 6),
-#### Children:
-- [BFBehAnimate](#bfbehanimate)
-- [randomSets](#randomsets)
-
----
-
-## BFBehRandomSet
 Randomly plays behSets given in [randomSets](#randomsets) according to each entries' weight.
 #### Attributes:
 - __minPlays__ (_int_) - How long many times should this behSet be run at least?
@@ -928,7 +734,6 @@ Randomly plays behSets given in [randomSets](#randomsets) according to each entr
 #### Children:
 - [randomSets](#randomsets)
 - ?[BFBehAnimate](#bfbehanimate)? (probably an error)
-
 
 #### Example:
 ```xml
@@ -939,17 +744,6 @@ Randomly plays behSets given in [randomSets](#randomsets) according to each entr
 	</randomSets>
  </BFBehRandomSet>
 ```
-
----
-
-## BFBehScript
-#### Attributes:
-- __context__ (_string_) - (behavior),
-- __file__ (_float_) - (scripts/CrateAnimal.lua, scripts/canreproduce.lua, scripts/justgavebirth.lua, scripts/playparticle.lua, scripts/setmates.lua),
-- __function__ (_string_) - (CrateAnimal, canreproduce, justgavebirth, playParticle, setmates),
-- __params__ (_string_) - (Bloodlust, CatScratchFever, ExtinctFlu, {Bip01} runps PlacementCloud, {Floor} runps PlacementCloud),
-#### Children:
-- None
 
 ---
 
@@ -971,14 +765,6 @@ Executes a function from a BIN or LUA script.
 ---
 
 ## BFBehSendToken
-#### Attributes:
-- None
-#### Children:
-- [BFAITokenList](#bfaitokenlist)
-
----
-
-## BFBehSendToken
 Always contains a [BFAITokenList](#bfaitokenlist).
 #### Attributes:
 - None
@@ -996,16 +782,6 @@ Always contains a [BFAITokenList](#bfaitokenlist).
 ---
 
 ## BFBehSetAttribute
-#### Attributes:
-- None
-#### Children:
-- [BFAISubjectData](#bfaisubjectdata)
-- [BFAISubjecttData](#bfaisubjecttdata)
-- [BFAITargetData](#bfaitargetdata)
-
----
-
-## BFBehSetAttribute
 Can set attributes on the subject or the target.
 #### Attributes:
 - None
@@ -1013,21 +789,6 @@ Can set attributes on the subject or the target.
 - [BFAISubjectData](#bfaisubjectdata)
 - [BFAITargetData](#bfaitargetdata)
 - !BFAISubjecttData! (typo, in the wild, not functional!)
-
----
-
-## BFBehSpawn
-#### Attributes:
-- __fadeInPeriod__ (_int_) - (0, 1),
-- __randomPosOffset__ (_int_) - (0, 0.1, 0.5, 1, 3),
-- __randomRotOffset__ (_int_) - (180),
-- __spawnEntity__ (_string_) - (Aardvark_Young_F, Aardvark_Young_M, Poop_Small, Poop_Small_Sick, Poop_Ungulate),
-- __spawnInTA__ (_bool_) - (true),
-- __spawnRelation__ (_string_) - (child),
-- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
-- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
-#### Children:
-- None
 
 ---
 
@@ -1053,18 +814,6 @@ Creates new (child) entities.
 ---
 
 ## BFBehSyncSet
-#### Attributes:
-- __resetPhase__ (_bool_) - (true),
-- __subjectBehSet__ (_string_) - (DockFight, DockGroom, FightSnap, GroomYoung, Mate),
-- __syncEntity__ (_string_) - (object),
-- __targetBehSet__ (_string_) - (DockFight2, FightSnap, Mate, Stand, WaitGroom),
-- __useTargetName__ (_bool_) - (true),
-#### Children:
-- None
-
----
-
-## BFBehSyncSet
 Simultaneously plays behSets on subject and target.
 #### Attributes:
 - __subjectBehSet__ (_string_) - The behSet performed by the subject.
@@ -1083,13 +832,19 @@ Simultaneously plays behSets on subject and target.
 ---
 
 ## BFBehWaitQueue
+Controls guests as they wait in a queue.
 #### Attributes:
-- __container__ (_string_) - (foodprop, head_inventory, lefthandobject, mouth, righthand),
+- * __container__ (_string_) - Name of the queue container.
 - __maxWaitTime__ (_int_) - (360, 60, 90),
 - __minWaitTime__ (_int_) - (30, 60),
 - __waitBehSet__ (_string_) - (WaitInLine, WaitInLineStation),
 #### Children:
 - None
+
+#### Example:
+```xml
+ <BFBehWaitQueue minWaitTime="30" maxWaitTime="60" waitBehSet="WaitInLine"/>
+```
 
 ---
 
