@@ -514,6 +514,7 @@ Starts a TAP interaction, is followed by [BFBehAnimateTAP](#bfbehanimatetap).
 ```xml
  <BFBehDockTAP targetAnim="Walk_Ahead" subjectNode="Floor" targetTAP="DockNode01_BaseA2Branch1AEnd"/>
 ```
+
 ---
 
 ## BFBehEnter
@@ -527,7 +528,8 @@ Used to initiate interaction with a building; generally followed by a `useContai
 ```xml
  <BFBehEnter/>
  <BFBehPlaySet behSet="useContainer"/>
-```xml
+```
+
 ---
 
 ## BFBehEscapeObstacle
