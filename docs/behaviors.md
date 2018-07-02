@@ -342,7 +342,7 @@ Switches between different animations according to which state (anim set) the AI
 ---
 
 ## BFBehAnimateTAP
-Starts a TAP interaction, must be preceded by [BFBehDockTAP](#bfbehdocktap).
+Starts a TAP interaction, must be preceded by [BFBehDockTAP](#bfbehdocktap). During use, the subject's animation is driven by macros that are defined in its XML and executed by the TAP anim's txtkeys.
 #### Attributes:
 - __subjectNode__ (_string_) - Name of the subject's dock node, eg. `Node_Mouth`, `Floor`...
 - __targetTAP__ (_string_) - The name of the TAP anim / node the entity should follow.
@@ -350,6 +350,12 @@ Starts a TAP interaction, must be preceded by [BFBehDockTAP](#bfbehdocktap).
 - __!exitTap!__ (_bool_) - Typo for __exitTAP__.
 #### Children:
 - None
+
+#### Example:
+```xml
+ <BFBehAnimateTAP subjectNode="Floor" targetTAP="DockNode01_BaseA2Branch1AEnd" exitTap="false"/>
+ <BFBehAnimateTAP subjectNode="Floor" targetTAP="DockNode02_Branch1AEnd2ExitA" exitTAP="true"/>
+```
 
 ---
 
@@ -390,6 +396,11 @@ Detaches an object from the subject.
 #### Children:
 - [textkeys](#textkeys)
 
+#### Example:
+```xml
+ <BFBehDetachObject targetAnim="StandBiObject_2Stand" detachEntity="object" detachAction="killitem"/>
+```
+
 ---
 
 ## BFBehDock
@@ -406,6 +417,10 @@ Docks an entity exactly according to subject's and target's dock nodes.
 #### Children:
 - None
 
+```xml
+ <BFBehDock subjectNode="Node_Mouth" targetAnim="Stand_Idle"/>
+```
+
 ---
 
 ## BFBehDockNow
@@ -421,6 +436,11 @@ This (probably) is the docking operation that greatly speeds up an entity's move
 #### Children:
 - None
 
+#### Example:
+```xml
+ <BFBehDockNow subjectNode="p_FightOffset" targetNode="p_FightOffset" reserveSlotName="general" redock="true"/>
+```
+
 ---
 
 ## BFBehDockQueue
@@ -433,7 +453,6 @@ This docks guests to a queue in front of a building.
 #### Children:
 - None
 
-
 #### Example:
 ```xml
  <BFBehDockQueue hitRadius="2.5" queueRadius="12" locoSpeed="slow"/>
@@ -442,7 +461,7 @@ This docks guests to a queue in front of a building.
 ---
 
 ## BFBehDockRadial
-Docks an entity exactly according to subject's dock nodes, ignoring the rotation specified by the target's dock node.
+Docks an entity according to subject's dock nodes, ignoring the rotation specified by the target's dock node.
 #### Attributes:
 - __subjectNode__ (_string_) - Name of the subject's dock node, eg. `Node_Mouth`, `Floor`...
 * __targetNode__ (_string_) - Name of the target's dock node, eg. `p_InvestigateNode`, `Dock_Attach`...
@@ -454,6 +473,11 @@ Docks an entity exactly according to subject's dock nodes, ignoring the rotation
 * __interpolationDistance__ (_float_) - ?
 #### Children:
 - None
+
+#### Example:
+```xml
+ <BFBehDockRadial subjectNode="Floor" targetAnim="StandBiObject_Idle"/>
+```
 
 ---
 
@@ -470,6 +494,11 @@ Docks usin spline interpolation, in 3D?
 #### Children:
 - None
 
+#### Example:
+```xml
+ <BFBehDockSpline locoSpeed="fast" targetAnim="TreadWater_Idle"/>
+```
+
 ---
 
 ## BFBehDockTAP
@@ -481,6 +510,10 @@ Starts a TAP interaction, is followed by [BFBehAnimateTAP](#bfbehanimatetap).
 #### Children:
 - None
 
+#### Example:
+```xml
+ <BFBehDockTAP targetAnim="Walk_Ahead" subjectNode="Floor" targetTAP="DockNode01_BaseA2Branch1AEnd"/>
+```
 ---
 
 ## BFBehEnter
@@ -498,6 +531,7 @@ Used to initiate interaction with a building; generally followed by a `useContai
 ---
 
 ## BFBehEscapeObstacle
+Only used in some marine animals; apparently tries to move beached swimmers back into water.
 #### Attributes:
 * __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
 - __escapeTime__ (_int_) - (5, 20)
@@ -505,6 +539,11 @@ Used to initiate interaction with a building; generally followed by a `useContai
 #### Children:
 - None
 
+#### Example:
+```xml
+ <BFBehEscapeObstacle locoSpeed="medium" escapeTime="5" escapeRadius="5"/>
+```
+	  
 ---
 
 ## BFBehEvasion
