@@ -7,10 +7,10 @@ This page lists all known modules and functions that can be used to create ZT2 A
 (actually, the tag is always the name of the anim set, eg. `Stand`)
 #### Attributes: 
 - __anim__ (_string_) - The exact animation that should be played in this set, eg. `Stand_Idle`.
-- __*behSet__ (_string_) - May apparently be used instead of an anim.
-- __*weight__ (_int_) - The probability of using this subset; should add up to 100.
-- __*minAnimSpeed__ (_float_) - Minimum anim speed to use in playback.
-- __*maxAnimSpeed__ (_float_) - Maximum anim speed to use in playback.
+- * __behSet__ (_string_) - May apparently be used instead of an anim.
+- * __weight__ (_int_) - The probability of using this subset; should add up to 100.
+- * __minAnimSpeed__ (_float_) - Minimum anim speed to use in playback.
+- * __maxAnimSpeed__ (_float_) - Maximum anim speed to use in playback.
 #### Children:
 - None
 
@@ -28,7 +28,7 @@ This page lists all known modules and functions that can be used to create ZT2 A
 ## "randomAnimsEntry"
 (The tag is really the name of the anim that should be played, eg. `Stand_Idle`)
 #### Attributes:
-- __*weight__ (_int_) - The probability of using this anim; should add up to 100.
+- * __weight__ (_int_) - The probability of using this anim; should add up to 100.
 #### Children:
 - None
 
@@ -52,32 +52,31 @@ This page lists all known modules and functions that can be used to create ZT2 A
 
 ---
 
+## AnimalEnters
+#### Attributes:
+- __BaseScore__ (_int_) - (0, 10, 20),
+- __FavoriteAnimalBonus__ (_int_) - (-20, 20, 70),
+- __FuzzyFactor__ (_int_) - (20, 50),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+#### Children:
+- [Reaction](#reaction)
+
+---
+
+## AnimalLeaves
+#### Attributes:
+- __BaseScore__ (_int_) - (0, 10, 20),
+- __FavoriteAnimalBonus__ (_int_) - (-20, 20, 70),
+- __FuzzyFactor__ (_int_) - (20, 50),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+#### Children:
+- [Reaction](#reaction)
+
+---
+
 ## BFAIAttributeFloatMap
 #### Attributes:
-- __amusement__ (_int_) - (-100, -30, -50, -75),
-- __b_Rampage__ (_bool_) - (E true, false),
-- __bathroom__ (_int_) - (-100, -40, -50, 30, 5),
-- __breath__ (_int_) - (.45, 1.0, 2.5, GE 95, LE 95),
-- __dessert__ (_int_) - (-100, -50, -75),
-- __exercise__ (_int_) - (-10, -100, -20, -30, -50),
-- __explore__ (_int_) - (-25, -30),
-- __f_CouldntFindDonationBox__ (_int_) - (1),
-- __f_DidFindDonationBox__ (_int_) - (1),
-- __gift__ (_int_) - (+25, -100, -50, -75),
-- __health__ (_int_) - (-10, -5, 5, G 0, GE 50),
-- __hunger__ (_int_) - (-1, -10, -40, GE 90, L 90),
-- __hygiene__ (_int_) - (-25, 15, 30, GE 90, L 90),
-- __lifespan__ (_int_) - (1.1, GE 2, GE 2.09, GE 5, LE 1),
-- __privacy__ (_int_) - (-10, -20, -25, -35, -50),
-- __reproduction__ (_int_) - (-20, -27, -30, -40, -50),
-- __rest__ (_int_) - (10, 20, GE 70, LE 49, LE 69),
-- __social__ (_int_) - (-10, -2, -20, -30, -40),
-- __space__ (_int_) - (-40, GE 70, GE 90),
-- __stimulation__ (_int_) - (-10, -20, -25, -30, -35),
-- __thirst__ (_int_) - (-1, -3, -50, GE 90, L 90),
-- __viewanimals__ (_int_) - (-100, -50, -75),
-- __wetness__ (_int_) - (-50, 10, 50),
-- __work__ (_int_) - (-.5, -1, -2, -5, -50),
+- __"attribute"__ (_float_ or _bool_) - Assigns the given value to the named attribute.
 #### Children:
 - None
 
@@ -99,7 +98,7 @@ Maps each biome to a preference / weight in range 0-1. Always called from [BFAIE
 
 ## BFAICompletionData
 #### Attributes:
-- __invalidateTarget__ (_bool_) - (true),
+- __invalidateTarget__ (_bool_) - Default is `false`.
 - __needPointsBad__ (_float_) - (.1, 1, 30, 5, 50),
 #### Children:
 - [BFAIAttributeFloatMap](#bfaiattributefloatmap)
@@ -108,6 +107,7 @@ Maps each biome to a preference / weight in range 0-1. Always called from [BFAIE
 - [BFAITokenList](#bfaitokenlist)
 - [BFBehExecTask](#bfbehexectask)
 - [BFBehSendToken](#bfbehsendtoken)
+- [userData](#userdata)
 
 ---
 
@@ -116,6 +116,7 @@ Maps each biome to a preference / weight in range 0-1. Always called from [BFAIE
 - None
 #### Children:
 - [Objects](#objects)
+- [Objects_AND](#objects_and)
 - [Subjects](#subjects)
 - [Subjects_AND](#subjects_and)
 - [Targets](#targets)
@@ -126,6 +127,8 @@ Maps each biome to a preference / weight in range 0-1. Always called from [BFAIE
 ## BFAIEvalData
 #### Attributes:
 - __fixedScore__ (_int_) - (.00005, 10000, 12000, 12003, 12005),
+- __distanceInfluenced__ (_bool_) - (false, true),
+- __leaveZoo__ (_bool_) - (true),
 - __needPointsBad__ (_int_) - (.1, 1, 30, 5, 50),
 - __needPointsGood__ (_float_) - (.1, 10, 15, 5, 50),
 - __?f_needPointsGood?__ (_string_) - (15, G 0, L 50),
@@ -149,9 +152,9 @@ Maps each biome to a preference / weight in range 0-1. Always called from [BFAIE
 ## BFAISubjectData
 Must be called from [BFBehSetAttribute](#bfbehsetattribute).
 #### Attributes:
-- __"attribute"__ (_int_) - Assigns the given integer to the named attribute.
+- __"attribute"__ (_int_ or _bool_) - Assigns the given integer to the named attribute.
 #### Children:
-- TrickLearning (not documented)
+- [TrickLearning](#tricklearning)
 
 #### Example:
 ```xml
@@ -165,9 +168,9 @@ Must be called from [BFBehSetAttribute](#bfbehsetattribute).
 ## BFAITargetData
 Must be called from [BFBehSetAttribute](#bfbehsetattribute).
 #### Attributes:
-- __"attribute"__ (_int_) - Assigns the given integer to the named attribute.
+- __"attribute"__ (_int_ or _bool_) - Assigns the given integer to the named attribute.
 #### Children:
-- Options (not documented)
+- [Options](#options)
 
 #### Example:
 ```xml
@@ -181,20 +184,24 @@ Must be called from [BFBehSetAttribute](#bfbehsetattribute).
 ## BFAITaskTemplate
 #### Attributes:
 - __CursorTask__ (_bool_) - (false),
-- __Name__ (_string_) - (Ambient, DefaultTask_Animal, Die, Die_Land, t_Attack),
-- __Priority__ (_int_) - (1, 100, 2, 5, 900),
-- __TaskDelayMax__ (_int_) - (120, 15, 30, 300, 60),
-- __TaskDelayMin__ (_int_) - (10, 20, 30, 300, 60),
-- __UniqueID__ (_string_) - (ambient_ground:Ambient, ambient_ground:Die, ambient_water:Ambient, ambient_water:Die, ambient_water:Die_Land),
+- __Name__ (_string_) - (DefaultTask_Aardvark, DefaultTask_Actor, FastWander, Interact_Player, WanderWater),
+- __Priority__ (_int_) - (1, 10, 100, 5, 900),
+- __TaskDelayMax__ (_int_) - (100000, 180, 300, 420, 60),
+- __TaskDelayMin__ (_int_) - (10000, 180, 30, 300, 60),
+- __UniqueID__ (_string_) - (Aardvark:DefaultTask_Aardvark, Aardvark:FastWander, Aardvark:WanderWater, actor:DefaultTask_Actor, playerinteractions:Interact_Player),
 - __UseForKeeperPanel__ (_bool_) - (false),
-- __attachTag__ (_string_) - (Mouth, back, cleanerfish, lefthandyoung, mouth),
-- __distanceInfluenced__ (_bool_) - (false),
-- __objectContainer__ (_string_) - (back, lefthandyoung, mouth, righthand),
+- __UseFromTokenQualifiers__ (_bool_) - (true),
+- __attachTag__ (_string_) - (back, cleanerfish, hand, lefthandyoung, mouth),
+- __distanceInfluenced__ (_bool_) - (false, true),
+- __objectContainer__ (_string_) - (back, hand, lefthandyoung, mouth, righthand),
+- __objectName__ (_string_) - (entityname:CheeseCake_lower, entityname:CottonCandy_lower, entityname:FruitCup_lower, entityname:IceCream_lower, entityname:Popcorn_lower),
 - __priority__ (_int_) - (-1, 0, 1, 10, 2),
-- __reserveTag__ (_string_) - (Animal_Training_Area, Animals_Waiting_Area, Animals_Waiting_Area_Treat, General, Rampage),
-- __sensorTag__ (_string_) - (explore, habitat),
+- __reserveTag__ (_string_) - (Browse, General, Graze, Rest, TAP),
+- __sensorTag__ (_string_) - (explore, habitat, path, tour, viewanimals),
 - __useFromTokenQualifiers__ (_bool_) - (true),
 #### Children:
+- [BFAIAttributeFloatMap](#bfaiattributefloatmap)
+- [BFAIBiomeMap](#bfaibiomemap)
 - [BFAICompletionData](#bfaicompletiondata)
 - [BFAICreateData](#bfaicreatedata)
 - [BFAIEvalData](#bfaievaldata)
@@ -205,6 +212,7 @@ Must be called from [BFBehSetAttribute](#bfbehsetattribute).
 ---
 
 ## BFAITaskTemplateList
+The top-level container for all [BFAITaskTemplates](#bfaitasktemplate).
 #### Attributes:
 - None
 #### Children:
@@ -263,7 +271,7 @@ Contains [BFAITokens](#bfaitoken). Can be called from [BFBehSendToken](#bfbehsen
 ## BFBehAnimSwitchSet
 May switch between different behSets according to the state (= anim set) the subject entity is currently in.
 #### Attributes:
-- __*loopFlag__ (_bool_) - Default is `false`.
+- * __loopFlag__ (_bool_) - Default is `false`.
 #### Children:
 - [behaviorTable](#behaviortable)
 
@@ -286,16 +294,16 @@ May switch between different behSets according to the state (= anim set) the sub
 Plays an animation, optionally specifying ["textkeys"](#textkeys) as well.
 #### Attributes:
 - __targetAnim__ (_string_) - The name of the anim that should be played.
-- __*playTime__ (_int_) - How long this behSet should be played.
-- __*animSpeed__ (_float_) - Exact anim speed to use in playback.
-- __*minAnimSpeed__ (_float_) - Minimum anim speed to use in playback.
-- __*maxAnimSpeed__ (_float_) - Maximum anim speed to use in playback.
-- __*loopFlag__ (_bool_) - Should this loop forever? Default is `false`.
-- __*interruptFlag__ (_bool_) - Allow interruptions? Default is `false`.
-- __*interruptible__ (_bool_) - Can this anim be stopped during playback? Default is `false`.
-- __*blendDuration__ (_int_) - Probably orphaned and not used.
-- __*groundFit__ (_bool_) - Fit to ground according to leg nodes? Default is `true`.
-- __*physObj__ (_string_) - For multi-piece objects, which physObj should be animated (eg. `Vendor` for shops)
+- * __playTime__ (_int_) - How long this behSet should be played.
+- * __animSpeed__ (_float_) - Exact anim speed to use in playback.
+- * __minAnimSpeed__ (_float_) - Minimum anim speed to use in playback.
+- * __maxAnimSpeed__ (_float_) - Maximum anim speed to use in playback.
+- * __loopFlag__ (_bool_) - Should this loop forever? Default is `false`.
+- * __interruptFlag__ (_bool_) - Allow interruptions? Default is `false`.
+- * __interruptible__ (_bool_) - Can this anim be stopped during playback? Default is `false`.
+- * __blendDuration__ (_int_) - Probably orphaned and not used.
+- * __groundFit__ (_bool_) - Fit to ground according to leg nodes? Default is `true`.
+- * __physObj__ (_string_) - For multi-piece objects, which physObj should be animated (eg. `Vendor` for shops)
 #### Children:
 - ["textkeys"](#textkeys)
 
@@ -306,6 +314,9 @@ Randomly plays an anim from the [randomAnims](#randomanims) table.
 #### Attributes:
 - __minPlays__ (_int_) - How long many times should this behSet be run?
 - __maxPlays__ (_int_) - How long many times should this behSet be run?
+- * __playTime__ (_int_) - How long this behSet should be played.
+- * __loopFlag__ (_bool_) - Should this loop forever? Default is `false`.
+- * __interruptFlag__ (_bool_) - Allow interruptions? Default is `false`.
 #### Children:
 - [randomAnims](#randomanims)
 
@@ -335,8 +346,8 @@ Starts a TAP interaction, must be preceded by [BFBehDockTAP](#bfbehdocktap).
 #### Attributes:
 - __subjectNode__ (_string_) - Name of the subject's dock node, eg. `Node_Mouth`, `Floor`...
 - __targetTAP__ (_string_) - The name of the TAP anim / node the entity should follow.
-- __exitTap__ (_bool_) - Either `true` or `false`.
 - __exitTAP__ (_bool_) - Either `true` or `false`.
+- __!exitTap!__ (_bool_) - Typo for __exitTAP__.
 #### Children:
 - None
 
@@ -349,13 +360,15 @@ Attaches an object to the subject.
 - __targetAnim__ (_string_) - The name of the anim that should be played during attaching.
 - __subjectNode__ (_string_) - Name of the subject's node that will be parent to the attachment, eg. `Node_Eat`. This is often specified in the targetAnim's txtkey rather than explicitly in the BEH.
 - __targetNode__ (_string_) - Name of the target's attachment root node, usually `Dock_Attach`...
+- __targetBehSet__ (_string_) - (DockFight, HitMediumEqual, BiteMed, Rendezvous, DefendEqual, ...)
 - __detachAction__ (_string_) - (killitem, dropitem, inventory)
 - __detachBehSet__ (_string_) - (Chew, DropYoung, DetachBaby, LetBabyOff, DetachRat)
+- __!detachBeh!__ (_string_) - Typo for __detachBehSet__.
 - __container__ (_string_) - (foodprop, righthand, lefthandobject, mouth, head_inventory, ...)
 - __locoMod__ (_string_) - (carry, carryback, drag, carryyoung, carrybaby)
-- __targetBehSet__ (_string_) - (DockFight, HitMediumEqual, BiteMed, Rendezvous, DefendEqual, ...)
 - __physObjToHide__ (_string_) - (mainObj, prop, ballprop)
 - __interruptFlag__ (_bool_) - (true)
+- __groundFit__ (_bool_) - (false),
 #### Children:
 - None
 
@@ -369,11 +382,13 @@ Attaches an object to the subject.
 ## BFBehDetachObject
 Detaches an object from the subject.
 #### Attributes:
+- __container__ (_string_) - (foodprop, head_inventory, lefthandobject, mouth, righthand),
+- __detachAction__ (_string_) - (dropitem, inventory, killitem, maketrash),
+- __detachEntity__ (_string_) - (BrownFish_Prop, ElephantAfrican_Gift, ShakerToy, ShakerToy_Open, object),
+- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
 - __targetAnim__ (_string_) - The name of the anim that should be played.
-- __detachEntity__ (_string_) - (object, ShakerToy, ShakerToy_Open, BrownFish_Prop, Remora, ...)
-- __detachAction__ (_string_) - (killitem, dropitem, inventory),
 #### Children:
-- textkeys
+- [textkeys](#textkeys)
 
 ---
 
@@ -383,13 +398,13 @@ Docks an entity exactly according to subject's and target's dock nodes.
 - __subjectNode__ (_string_) - Name of the subject's dock node, eg. `Node_Mouth`, `Floor`...
 - __targetNode__ (_string_) - Name of the target's dock node, eg. `p_InvestigateNode`, `Dock_Attach`...
 - __targetAnim__ (_string_) - The name of the anim that should be played during docking.
-- __*locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
-- __*avoidWater__ (_bool_) - Should the entity try to stay on land? Default is `false`.
+- * __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
+- * __avoidWater__ (_bool_) - Should the entity try to stay on land? Default is `false`.
 - __redock__ (_bool_) - Default is `false`.
 - __reserveSlotName__ (_string_) - Either `general` or `Trainer`.
-- __*interpolationDistance__ (_float_) - ?
+- * __interpolationDistance__ (_float_) - ?
 #### Children:
-- 
+- None
 
 ---
 
@@ -401,6 +416,34 @@ This (probably) is the docking operation that greatly speeds up an entity's move
 - __targetAnim__ (_string_) - The name of the anim that should be played during docking.
 - __reserveSlotName__ (_string_) - Either `general` or `Trainer`.
 - __redock__ (_bool_) - Default is `false`.
+- * __unparent__ (_bool_) - Default is `false`.
+- * __parentToTarget__ (_bool_) - Default is `false`.
+#### Children:
+- None
+
+---
+
+## BFBehDockQueue
+#### Attributes:
+- __container__ (_string_) - (foodprop, head_inventory, lefthandobject, mouth, righthand),
+- __hitRadius__ (_int_) - (2, 3, 5, 6, 8),
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+- __queueRadius__ (_int_) - (12),
+#### Children:
+- None
+
+---
+
+## BFBehDockRadial
+#### Attributes:
+- __dockRadius__ (_float_) - (.3, .4, .5, .6, .8),
+- __interpolationDistance__ (_float_) - (0.15, 0.5, 1, 2, 9.0),
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+- __rotError__ (_int_) - (180, 22.5),
+- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
+- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
+- __targetNode__ (_string_) - (Dock_Attach, p_FightOffset, p_NurseNode, p_PredatorOffset, p_PreyOffset),
+- __targetRadius__ (_int_) - (1, 2, 3, 4, 6),
 #### Children:
 - None
 
@@ -410,13 +453,28 @@ This (probably) is the docking operation that greatly speeds up an entity's move
 Docks an entity exactly according to subject's dock nodes, ignoring the rotation specified by the target's dock node.
 #### Attributes:
 - __subjectNode__ (_string_) - Name of the subject's dock node, eg. `Node_Mouth`, `Floor`...
-- __*targetNode__ (_string_) - Name of the target's dock node, eg. `p_InvestigateNode`, `Dock_Attach`...
+- * __targetNode__ (_string_) - Name of the target's dock node, eg. `p_InvestigateNode`, `Dock_Attach`...
 - __targetAnim__ (_string_) - Anim the subject should play when docking with the target, eg. `Fly_Ahead`.
 - __targetRadius__ (_int_) - Radius around the target.
-- __*rotError__ (_int_) - Always 180.
-- __*locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
-- __*dockRadius__ (_float_) - 
-- __*interpolationDistance__ (_float_) - ?
+- * __rotError__ (_int_) - Always 180.
+- * __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
+- * __dockRadius__ (_float_) - 
+- * __interpolationDistance__ (_float_) - ?
+#### Children:
+- None
+
+---
+
+## BFBehDockSpline
+#### Attributes:
+- __ignoreCollisionWithTarget__ (_bool_) - (false),
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+- __locospeed__ (_string_) - (fast, medium, slow),
+- __redock__ (_bool_) - (false, true),
+- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
+- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
+- __targetNode__ (_string_) - (Dock_Attach, p_FightOffset, p_NurseNode, p_PredatorOffset, p_PreyOffset),
+- __useBuoyNodes__ (_bool_) - (false),
 #### Children:
 - None
 
@@ -428,10 +486,20 @@ Docks usin spline interpolation, in 3D?
 - __subjectNode__ (_string_) - Name of the subject's dock node, eg. `Node_Mouth`, `Floor`...
 - __targetNode__ (_string_) - Name of the target's dock node, eg. `p_InvestigateNode`, `Dock_Attach`...
 - __targetAnim__ (_string_) - The name of the anim that should be played.
-- __*locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
+- * __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
 - __ignoreCollisionWithTarget__ (_bool_) - Default is `true`.
 - __useBuoyNodes__ (_bool_) - Default is `true`.
 - __redock__ (_bool_) - Default is `false`.
+#### Children:
+- None
+
+---
+
+## BFBehDockTAP
+#### Attributes:
+- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
+- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
+- __targetTAP__ (_string_) - (Bip01_DockNode01_BaseA2Branch1AEnd, Bip01_DockNode03_BaseB2Branch1BEnd, Bip01_DockNode05_BaseC2Branch1CEnd, Bip01_DockNode07_BaseD2Branch1DEnd, Bip01_DockNode09_BaseE2Branch1EEnd),
 #### Children:
 - None
 
@@ -458,11 +526,34 @@ Starts a TAP interaction, is followed by [BFBehAnimateTAP](#bfbehanimatetap).
 
 ## BFBehEscapeObstacle
 #### Attributes:
-- __*locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
+- * __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
 - __escapeTime__ (_int_) - (5, 20)
 - __escapeRadius__ (_int_) - (5)
 #### Children:
 - None
+
+---
+
+## BFBehEscapeObstacle
+#### Attributes:
+- __escapeRadius__ (_int_) - (5),
+- __escapeTime__ (_int_) - (20, 5),
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+#### Children:
+- None
+
+---
+
+## BFBehEvasion
+#### Attributes:
+- __avoidLand__ (_bool_) - (true),
+- __avoidObstacleRadius__ (_int_) - (2, 3, 5, 6),
+- __avoidWater__ (_bool_) - (true),
+- __evasionRadius__ (_int_) - (10, 12, 15, 25, 30),
+- __evasionTime__ (_int_) - (10, 15, 60),
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+#### Children:
+- [avoidEntityTypes](#avoidentitytypes)
 
 ---
 
@@ -472,10 +563,69 @@ Directed motion fleeing from a target, optionally avoiding third-party entities 
 - __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
 - __evasionRadius__ (_int_) - Minimal distance between subject and target to stop evading.
 - __evasionTime__ (_int_) - How much time should be spent evading the target?
-- __*avoidWater__ (_bool_) - Should the entity try to stay on land? Default is `false`.
-- __*avoidLand__ (_bool_) - Should the entity try to stay in water? Default is `false`.
+- * __avoidWater__ (_bool_) - Should the entity try to stay on land? Default is `false`.
+- * __avoidLand__ (_bool_) - Should the entity try to stay in water? Default is `false`.
 #### Children:
 - *[avoidEntityTypes](#avoidentitytypes)
+
+---
+
+## BFBehExecTask
+#### Attributes:
+- None
+#### Children:
+- [BFAISubjectData](#bfaisubjectdata)
+- [BFBehAnimSwitchSet](#bfbehanimswitchset)
+- [BFBehAnimate](#bfbehanimate)
+- [BFBehAnimateRandom](#bfbehanimaterandom)
+- [BFBehAttachObject](#bfbehattachobject)
+- [BFBehDetachObject](#bfbehdetachobject)
+- [BFBehDock](#bfbehdock)
+- [BFBehDockQueue](#bfbehdockqueue)
+- [BFBehDockRadial](#bfbehdockradial)
+- [BFBehDockSpline](#bfbehdockspline)
+- [BFBehEnter](#bfbehenter)
+- [BFBehEscapeObstacle](#bfbehescapeobstacle)
+- [BFBehEvasion](#bfbehevasion)
+- [BFBehExit](#bfbehexit)
+- [BFBehFaceTarget](#bfbehfacetarget)
+- [BFBehFall](#bfbehfall)
+- [BFBehHeadLook](#bfbehheadlook)
+- [BFBehHide](#bfbehhide)
+- [BFBehKill](#bfbehkill)
+- [BFBehLocoSwitchSet](#bfbehlocoswitchset)
+- [BFBehMove](#bfbehmove)
+- [BFBehPlaySet](#bfbehplayset)
+- [BFBehPursuit](#bfbehpursuit)
+- [BFBehRandomSet](#bfbehrandomset)
+- [BFBehScript](#bfbehscript)
+- [BFBehSendToken](#bfbehsendtoken)
+- [BFBehSendTrigger](#bfbehsendtrigger)
+- [BFBehSetAttribute](#bfbehsetattribute)
+- [BFBehSpawn](#bfbehspawn)
+- [BFBehSyncSet](#bfbehsyncset)
+- [BFBehWaitQueue](#bfbehwaitqueue)
+- [BFBehWander](#bfbehwander)
+- [ZTBehAddSubjectAsDiseaseTarget](#ztbehaddsubjectasdiseasetarget)
+- [ZTBehChangeWaterDirtiness](#ztbehchangewaterdirtiness)
+- [ZTBehDockFence](#ztbehdockfence)
+- [ZTBehDockTankWall](#ztbehdocktankwall)
+- [ZTBehDockWater](#ztbehdockwater)
+- [ZTBehEconomy](#ztbeheconomy)
+- [ZTBehExitTankGate](#ztbehexittankgate)
+- [ZTBehFeedback](#ztbehfeedback)
+- [ZTBehFindArtifact](#ztbehfindartifact)
+- [ZTBehKickOffRider](#ztbehkickoffrider)
+- [ZTBehMorph](#ztbehmorph)
+- [ZTBehPlaceTarget](#ztbehplacetarget)
+- [ZTBehStaffTrainAnimal](#ztbehstafftrainanimal)
+- [ZTBehTargetFence](#ztbehtargetfence)
+- [ZTBehTeleportToLoc](#ztbehteleporttoloc)
+- [ZTBehTestTargetPos](#ztbehtesttargetpos)
+- [ZTBehTour](#ztbehtour)
+- [ZTBehUsePortal](#ztbehuseportal)
+- [ZTBehViewAnimals](#ztbehviewanimals)
+- [ZTBehViewEvent](#ztbehviewevent)
 
 ---
 
@@ -525,6 +675,22 @@ The TSK equivalent to the BEH's [behaviors](#behaviors) container. Can use more 
 
 ---
 
+## BFBehExit
+#### Attributes:
+- __exitBehSet__ (_string_) - (ExitBench, ExitGrandstand, ExitTrashContainer),
+#### Children:
+- None
+
+---
+
+## BFBehFaceTarget
+#### Attributes:
+- __rotError__ (_int_) - (180, 22.5),
+#### Children:
+- None
+
+---
+
 ## BFBehFaceTarget
 Makes the subject face its target, preferably by playing the appropriate turning animations.
 #### Attributes:
@@ -543,13 +709,34 @@ Makes the subject face its target, preferably by playing the appropriate turning
 ---
 
 ## BFBehFollowEntity
+#### Attributes:
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+- __maxPlayTime__ (_int_) - (10, 15, 20, 6, 7),
+- __minPlayTime__ (_int_) - (10, 3, 4, 5, 7),
+- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
+- __targetNode__ (_string_) - (Dock_Attach, p_FightOffset, p_NurseNode, p_PredatorOffset, p_PreyOffset),
+#### Children:
+- None
+
+---
+
+## BFBehFollowEntity
 Makes the subject follow the target.
 #### Attributes:
 - __subjectNode__ (_string_) - Name of the subject's follow node, eg. `Node_Mouth`, `Floor`...
 - __targetNode__ (_string_) - Name of the target's (ie. the leader's) follow node, eg. `p_InvestigateNode`, `Dock_Attach`...
-- __*locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
-- __*minPlayTime__ (_int_) - How long this behSet should be played.
-- __*maxPlayTime__ (_int_) - How long this behSet should be played.
+- * __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
+- * __minPlayTime__ (_int_) - How long this behSet should be played.
+- * __maxPlayTime__ (_int_) - How long this behSet should be played.
+#### Children:
+- None
+
+---
+
+## BFBehHeadLook
+#### Attributes:
+- __disengage__ (_bool_) - (true),
+- __targetNode__ (_string_) - (Dock_Attach, p_FightOffset, p_NurseNode, p_PredatorOffset, p_PreyOffset),
 #### Children:
 - None
 
@@ -564,6 +751,29 @@ Toggles the secondary headlook component in the XML.
 
 ---
 
+## BFBehHide
+#### Attributes:
+- __maxTime__ (_int_) - (1, 20, 8),
+- __minTime__ (_int_) - (1, 15, 4),
+#### Children:
+- None
+
+---
+
+## BFBehKill
+#### Attributes:
+- __fadeOutPeriod__ (_int_) - (1, 2, 3, 4, 5),
+- __killSubject__ (_bool_) - (true),
+- __killTarget__ (_bool_) - (true),
+- __killUsingDestroyEntity__ (_bool_) - (true),
+- __radius__ (_int_) - (20, 3, 30, 5, 6),
+- __radiusKillType__ (_string_) - (ShakerToy_Open, fence),
+- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
+#### Children:
+- None
+
+---
+
 ## BFBehKill
 Deletes entities, optionally fading them out.
 #### Attributes:
@@ -573,7 +783,7 @@ Deletes entities, optionally fading them out.
 - __radiusKillType__ (_string_) - Probably related to the above bool, names an entity like ´fence´, `ShakerToy_Open` to be killed in the radius (below).
 - __radius__ (_int_) - The radius in which entities of the given type should be killed in.
 - __targetAnim__ (_string_) - The name of the anim that should be played.
-- __*fadeOutPeriod__ (_int_) - Duration of the fadeout in seconds, default is probably `0`.
+- * __fadeOutPeriod__ (_int_) - Duration of the fadeout in seconds, default is probably `0`.
 #### Children:
 - None
 
@@ -585,9 +795,17 @@ Deletes entities, optionally fading them out.
 ---
 
 ## BFBehLocoSwitchSet
+#### Attributes:
+- __switch__ (_bool_) - (false),
+#### Children:
+- [behaviorTable](#behaviortable)
+
+---
+
+## BFBehLocoSwitchSet
 May switch between different behSets according to the location the subject entity is currently in.
 #### Attributes:
-- __*switch__ (_bool_) - Default is `true`.
+- * __switch__ (_bool_) - Default is `true`.
 #### Children:
 - [behaviorTable](#behaviortable)
 
@@ -605,15 +823,43 @@ May switch between different behSets according to the location the subject entit
 
 ## BFBehMove
 #### Attributes:
-- __*depthBelowSurface__ (_int_ or comparison) - eg. (4, 0, 12, G 1, LE 1, ...)
-- __*pathRadius__ (_int_) - (0, 3, 10, 7, 20, ...)
-- __*moveRadius__ (_int_) - (1000, 5, 1, 3, 4, ...)
-- __*closestApproach__ (_bool_) - Default is `false`.
-- __*targetNode__ (_string_) - name of the dock node, eg. `p_InvestigateNode`, `Dock_Attach`...
-- __*locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
-- __*heightAboveFloor__ (_float_) - Seafloor offset?
-- __*hitRadius__ (_int_) - (5, 3, 10, 8, 6, ...)
-- __*depthAboveBottom__ (_int_ or comparison) - (LE 1, LE 3, 1)
+- * __depthBelowSurface__ (_int_ or comparison) - eg. (4, 0, 12, G 1, LE 1, ...)
+- * __pathRadius__ (_int_) - (0, 3, 10, 7, 20, ...)
+- * __moveRadius__ (_int_) - (1000, 5, 1, 3, 4, ...)
+- * __closestApproach__ (_bool_) - Default is `false`.
+- * __targetNode__ (_string_) - name of the dock node, eg. `p_InvestigateNode`, `Dock_Attach`...
+- * __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
+- * __heightAboveFloor__ (_float_) - Seafloor offset?
+- * __hitRadius__ (_int_) - (5, 3, 10, 8, 6, ...)
+- * __depthAboveBottom__ (_int_ or comparison) - (LE 1, LE 3, 1)
+#### Children:
+- None
+
+---
+
+## BFBehMove
+#### Attributes:
+- __closestApproach__ (_bool_) - (true),
+- __depthAboveBottom__ (_int_) - (1, LE 1, LE 3),
+- __depthBelowSurface__ (_int_) - (0, 12, 4, G 1, GE 2),
+- __heightAboveFloor__ (_float_) - (0, 0.1, 0.3, 0.5, 1.5),
+- __hitRadius__ (_int_) - (2, 3, 5, 6, 8),
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+- __moveRadius__ (_int_) - (1, 1000, 3, 5, 6),
+- __pathRadius__ (_float_) - (0, 10, 3, 3.0, 7),
+- __targetNode__ (_string_) - (Dock_Attach, p_FightOffset, p_NurseNode, p_PredatorOffset, p_PreyOffset),
+#### Children:
+- None
+
+---
+
+## BFBehPlaySet
+#### Attributes:
+- __behSet__ (_string_) - (Bleat, Dig, DustBathe, FailureSet, TreadWater_Idle),
+- __interruptEvent__ (_string_) - (collideWithTarget),
+- __interruptFlag__ (_bool_) - (false, true),
+- __loopFlag__ (_bool_) - (true),
+- __playTime__ (_int_) - (10, 2, 20, 35, 8),
 #### Children:
 - None
 
@@ -623,10 +869,10 @@ May switch between different behSets according to the location the subject entit
 Very generic function that simply plays back another behSet.
 #### Attributes:
 - __behSet__ (_string_) - The name of the behSet to be played.
-- __*playTime__ (_int_) - How long this behSet should be played.
-- __*interruptEvent__ (_string_) - Apparently, this event stops the playing behSet prematurely, eg. `collideWithTarget`.
-- __*loopFlag__ (_bool_) - Should this loop forever? Default is `false`.
-- __*interruptFlag__ (_bool_) - Allow interruptions? Default is `false`.
+- * __playTime__ (_int_) - How long this behSet should be played.
+- * __interruptEvent__ (_string_) - Apparently, this event stops the playing behSet prematurely, eg. `collideWithTarget`.
+- * __loopFlag__ (_bool_) - Should this loop forever? Default is `false`.
+- * __interruptFlag__ (_bool_) - Allow interruptions? Default is `false`.
 #### Children:
 - None
 
@@ -634,6 +880,18 @@ Very generic function that simply plays back another behSet.
 ```xml
  <BFBehPlaySet behSet="Graze"/>
 ```
+
+---
+
+## BFBehPursuit
+#### Attributes:
+- __failureRadius__ (_int_) - (1000, 600, 80),
+- __hitRadius__ (_int_) - (2, 3, 5, 6, 8),
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+- __pollFreq__ (_float_) - (0.1),
+- __pursuitRadius__ (_int_) - (15, 20, 30, 6, 9),
+#### Children:
+- None
 
 ---
 
@@ -651,11 +909,22 @@ Chases the target and stops when the subject has reached it.
 ---
 
 ## BFBehRandomSet
+#### Attributes:
+- __loopFlag__ (_bool_) - (true),
+- __maxPlays__ (_int_) - (1, 3, 4, 6, 7),
+- __minPlays__ (_int_) - (1, 2, 3, 4, 6),
+#### Children:
+- [BFBehAnimate](#bfbehanimate)
+- [randomSets](#randomsets)
+
+---
+
+## BFBehRandomSet
 Randomly plays behSets given in [randomSets](#randomsets) according to each entries' weight.
 #### Attributes:
 - __minPlays__ (_int_) - How long many times should this behSet be run at least?
 - __maxPlays__ (_int_) - How long many times should this behSet be run at max?
-- __*loopFlag__ (_bool_) - Should this loop forever? Default is `false`.
+- * __loopFlag__ (_bool_) - Should this loop forever? Default is `false`.
 #### Children:
 - [randomSets](#randomsets)
 - ?[BFBehAnimate](#bfbehanimate)? (probably an error)
@@ -670,6 +939,17 @@ Randomly plays behSets given in [randomSets](#randomsets) according to each entr
 	</randomSets>
  </BFBehRandomSet>
 ```
+
+---
+
+## BFBehScript
+#### Attributes:
+- __context__ (_string_) - (behavior),
+- __file__ (_float_) - (scripts/CrateAnimal.lua, scripts/canreproduce.lua, scripts/justgavebirth.lua, scripts/playparticle.lua, scripts/setmates.lua),
+- __function__ (_string_) - (CrateAnimal, canreproduce, justgavebirth, playParticle, setmates),
+- __params__ (_string_) - (Bloodlust, CatScratchFever, ExtinctFlu, {Bip01} runps PlacementCloud, {Floor} runps PlacementCloud),
+#### Children:
+- None
 
 ---
 
@@ -691,11 +971,37 @@ Executes a function from a BIN or LUA script.
 ---
 
 ## BFBehSendToken
+#### Attributes:
+- None
+#### Children:
+- [BFAITokenList](#bfaitokenlist)
+
+---
+
+## BFBehSendToken
 Always contains a [BFAITokenList](#bfaitokenlist).
 #### Attributes:
 - None
 #### Children:
 - [BFAITokenList](#bfaitokenlist)
+
+---
+
+## BFBehSendTrigger
+#### Attributes:
+- __subjectTrigger__ (_string_) - (Adjust_SurveyData, Adjust_ZooFame, Use_Bathroom, Use_Skytower_Down, Use_Skytower_Up),
+#### Children:
+- None
+
+---
+
+## BFBehSetAttribute
+#### Attributes:
+- None
+#### Children:
+- [BFAISubjectData](#bfaisubjectdata)
+- [BFAISubjecttData](#bfaisubjecttdata)
+- [BFAITargetData](#bfaitargetdata)
 
 ---
 
@@ -707,6 +1013,21 @@ Can set attributes on the subject or the target.
 - [BFAISubjectData](#bfaisubjectdata)
 - [BFAITargetData](#bfaitargetdata)
 - !BFAISubjecttData! (typo, in the wild, not functional!)
+
+---
+
+## BFBehSpawn
+#### Attributes:
+- __fadeInPeriod__ (_int_) - (0, 1),
+- __randomPosOffset__ (_int_) - (0, 0.1, 0.5, 1, 3),
+- __randomRotOffset__ (_int_) - (180),
+- __spawnEntity__ (_string_) - (Aardvark_Young_F, Aardvark_Young_M, Poop_Small, Poop_Small_Sick, Poop_Ungulate),
+- __spawnInTA__ (_bool_) - (true),
+- __spawnRelation__ (_string_) - (child),
+- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
+- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
+#### Children:
+- None
 
 ---
 
@@ -732,13 +1053,25 @@ Creates new (child) entities.
 ---
 
 ## BFBehSyncSet
+#### Attributes:
+- __resetPhase__ (_bool_) - (true),
+- __subjectBehSet__ (_string_) - (DockFight, DockGroom, FightSnap, GroomYoung, Mate),
+- __syncEntity__ (_string_) - (object),
+- __targetBehSet__ (_string_) - (DockFight2, FightSnap, Mate, Stand, WaitGroom),
+- __useTargetName__ (_bool_) - (true),
+#### Children:
+- None
+
+---
+
+## BFBehSyncSet
 Simultaneously plays behSets on subject and target.
 #### Attributes:
 - __subjectBehSet__ (_string_) - The behSet performed by the subject.
 - __targetBehSet__ (_string_) - The behSet performed by the target.
 - __resetPhase__ (_bool_) - Default is `false`
 - __useTargetName__ (_bool_) - Use the name in the info; default is `false`
-- __*syncEntity__ (_string_) - If this parameter is given, it is always `object`.
+- * __syncEntity__ (_string_) - If this parameter is given, it is always `object`.
 #### Children:
 - None
 
@@ -749,20 +1082,50 @@ Simultaneously plays behSets on subject and target.
 
 ---
 
+## BFBehWaitQueue
+#### Attributes:
+- __container__ (_string_) - (foodprop, head_inventory, lefthandobject, mouth, righthand),
+- __maxWaitTime__ (_int_) - (360, 60, 90),
+- __minWaitTime__ (_int_) - (30, 60),
+- __waitBehSet__ (_string_) - (WaitInLine, WaitInLineStation),
+#### Children:
+- None
+
+---
+
+## BFBehWander
+#### Attributes:
+- __avoidEntityRadius__ (_int_) - (10, 4, 6, 8),
+- __avoidLand__ (_bool_) - (true),
+- __avoidObstacleRadius__ (_int_) - (2, 3, 5, 6),
+- __avoidWater__ (_bool_) - (true),
+- __heightAboveFloor__ (_float_) - (0, 0.1, 0.3, 0.5, 1.5),
+- __ignoreBuoyNodes__ (_bool_) - (true),
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+- __maxDepth__ (_int_) - (0, 1, 10, 12, 4),
+- __maxPlayTime__ (_int_) - (10, 15, 20, 6, 7),
+- __minDepth__ (_int_) - (0, 2, 3, 4, 6),
+- __minPlayTime__ (_int_) - (10, 3, 4, 5, 7),
+- __playTime__ (_int_) - (10, 2, 20, 35, 8),
+#### Children:
+- [avoidEntityTypes](#avoidentitytypes)
+
+---
+
 ## BFBehWander
 Random, undirected locomotion, optionally avoiding third-party entities given in [avoidEntityTypes](#avoidentitytypes).
 #### Attributes:
-- __*playTime__ (_int_) - How long this behSet should be played.
-- __*minPlayTime__ (_int_) - How long this behSet should be played.
-- __*maxPlayTime__ (_int_) - How long this behSet should be played.
-- __*minDepth__ (_int_) - How shallow can this entity go?
-- __*maxDepth__ (_int_) - How deep can this entity go?
-- __*locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
-- __*avoidObstacleRadius__ (_int_) - Distance from (static?) obstacles.
-- __*avoidEntityRadius__ (_int_) - Distance from other entities.
-- __*avoidLand__ (_bool_) - Should the entity try to stay in water? Default is `false`.
-- __*avoidWater__ (_bool_) - Should the entity try to stay on land? Default is `false`.
-- __*ignoreBuoyNodes__ (_bool_) - Should this entity walk on the sea floor?
+- * __playTime__ (_int_) - How long this behSet should be played.
+- * __minPlayTime__ (_int_) - How long this behSet should be played.
+- * __maxPlayTime__ (_int_) - How long this behSet should be played.
+- * __minDepth__ (_int_) - How shallow can this entity go?
+- * __maxDepth__ (_int_) - How deep can this entity go?
+- * __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
+- * __avoidObstacleRadius__ (_int_) - Distance from (static?) obstacles.
+- * __avoidEntityRadius__ (_int_) - Distance from other entities.
+- * __avoidLand__ (_bool_) - Should the entity try to stay in water? Default is `false`.
+- * __avoidWater__ (_bool_) - Should the entity try to stay on land? Default is `false`.
+- * __ignoreBuoyNodes__ (_bool_) - Should this entity walk on the sea floor?
 #### Children:
 - [avoidEntityTypes](#avoidentitytypes)
 
@@ -781,11 +1144,23 @@ Random, undirected locomotion, optionally avoiding third-party entities given in
 ---
 
 ## BFBehWhap
+#### Attributes:
+- __groundFit__ (_bool_) - (false),
+- __interruptFlag__ (_bool_) - (false, true),
+- __randomOffset__ (_int_) - (0),
+- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
+- __whapAngle__ (_int_) - (225, 315),
+#### Children:
+- None
+
+---
+
+## BFBehWhap
 Used for interaction with physics objects, like balls.
 #### Attributes:
 - __targetAnim__ (_string_) - The name of the anim that should be played.
-- __*interruptFlag__ (_bool_) - Allow interruptions? Default is `false`.
-- __*groundFit__ (_bool_) - Fit to ground according to leg nodes? Default is `true`.
+- * __interruptFlag__ (_bool_) - Allow interruptions? Default is `false`.
+- * __groundFit__ (_bool_) - Fit to ground according to leg nodes? Default is `true`.
 - __whapAngle__ (_int_) - In degrees, eg. `225`.
 - __randomOffset__ (_int_) - Usually `0`,
 #### Children:
@@ -798,6 +1173,57 @@ Used for interaction with physics objects, like balls.
 
 ---
 
+## BeforeShow
+#### Attributes:
+- __BaseScore__ (_int_) - (0, 10, 20),
+- __FavoriteAnimalBonus__ (_int_) - (-20, 20, 70),
+- __FuzzyFactor__ (_int_) - (20, 50),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+#### Children:
+- [Reaction](#reaction)
+
+---
+
+## DefaultEvent
+#### Attributes:
+- __BaseScore__ (_int_) - (0, 10, 20),
+- __FavoriteAnimalBonus__ (_int_) - (-20, 20, 70),
+- __FuzzyFactor__ (_int_) - (20, 50),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+#### Children:
+- [Reaction](#reaction)
+
+---
+
+## EventScoring
+#### Attributes:
+- None
+#### Children:
+- [AnimalEnters](#animalenters)
+- [AnimalLeaves](#animalleaves)
+- [BeforeShow](#beforeshow)
+- [DefaultEvent](#defaultevent)
+- [MCEvent](#mcevent)
+- [ShowCancelled](#showcancelled)
+- [ShowEnds](#showends)
+- [Splashed](#splashed)
+- [TrickCritical](#trickcritical)
+- [TrickFailure](#trickfailure)
+- [TrickSuccess](#tricksuccess)
+- [WatchingAnimal](#watchinganimal)
+
+---
+
+## MCEvent
+#### Attributes:
+- __BaseScore__ (_int_) - (0, 10, 20),
+- __FuzzyFactor__ (_int_) - (20, 50),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+#### Children:
+- [Reaction](#reaction)
+
+---
+
 ## Objects
 #### Attributes:
 - None
@@ -806,11 +1232,70 @@ Used for interaction with physics objects, like balls.
 
 ---
 
+## Objects_AND
+#### Attributes:
+- None
+#### Children:
+- [t_Bullied](#t_bullied)
+- [t_Childless](#t_childless)
+- [t_ChildlessFertility](#t_childlessfertility)
+- [t_Flee](#t_flee)
+- [t_RivalScared](#t_rivalscared)
+- [t_ScreechAt](#t_screechat)
+
+---
+
 ## Options
 #### Attributes:
 - __Reset__ (_bool_) - (true),
 #### Children:
 - None
+
+---
+
+## Reaction
+#### Attributes:
+- __BehSet__ (_string_) - (TrickSuccess_Path_Pos_1, TrickSuccess_Path_Pos_2, WatchShow_Path_Midpoint, WatchShow_Path_Neg_1, WatchShow_Path_Pos_1),
+- __MinScore__ (_int_) - (0, 10, 20, 30, 40),
+#### Children:
+- None---
+
+## Reaction
+#### Attributes:
+- __BehSet__ (_string_) - (TrickSuccess_Path_Pos_1, TrickSuccess_Path_Pos_2, WatchShow_Path_Midpoint, WatchShow_Path_Neg_1, WatchShow_Path_Pos_1),
+- __MinScore__ (_int_) - (0, 10, 20, 30, 40),
+#### Children:
+- None
+
+---
+
+## ShowCancelled
+#### Attributes:
+- __Priority__ (_int_) - (1, 10, 100, 5, 900),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+#### Children:
+- [Reaction](#reaction)
+
+---
+
+## ShowEnds
+#### Attributes:
+- __Priority__ (_int_) - (1, 10, 100, 5, 900),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+#### Children:
+- [Reaction](#reaction)
+
+---
+
+## Splashed
+#### Attributes:
+- __BaseScore__ (_int_) - (0, 10, 20),
+- __FavoriteAnimalBonus__ (_int_) - (-20, 20, 70),
+- __FuzzyFactor__ (_int_) - (20, 50),
+- __Priority__ (_int_) - (1, 10, 100, 5, 900),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+#### Children:
+- [Reaction](#reaction)
 
 ---
 
@@ -846,9 +1331,71 @@ Used for interaction with physics objects, like balls.
 
 ---
 
+## TrickCritical
+#### Attributes:
+- __BaseScore__ (_int_) - (0, 10, 20),
+- __FavoriteAnimalBonus__ (_int_) - (-20, 20, 70),
+- __FuzzyFactor__ (_int_) - (20, 50),
+- __PerPrevious__ (_int_) - (40),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+- __TrickPopularityMult__ (_float_) - (-0.1, 0.3),
+#### Children:
+- [Reaction](#reaction)
+
+---
+
+## TrickFailure
+#### Attributes:
+- __BaseScore__ (_int_) - (0, 10, 20),
+- __FavoriteAnimalBonus__ (_int_) - (-20, 20, 70),
+- __FuzzyFactor__ (_int_) - (20, 50),
+- __IgnorePrevious__ (_int_) - (2),
+- __PerPrevious__ (_int_) - (40),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+- __TrickPopularityMult__ (_float_) - (-0.1, 0.3),
+#### Children:
+- [Reaction](#reaction)
+
+---
+
 ## TrickLearning
 #### Attributes:
 - None
+#### Children:
+- None
+
+---
+
+## TrickSuccess
+#### Attributes:
+- __BaseScore__ (_int_) - (0, 10, 20),
+- __FavoriteAnimalBonus__ (_int_) - (-20, 20, 70),
+- __FuzzyFactor__ (_int_) - (20, 50),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+- __TrickPopularityMult__ (_float_) - (-0.1, 0.3),
+#### Children:
+- [Reaction](#reaction)
+
+---
+
+## WatchingAnimal
+#### Attributes:
+- __BaseScore__ (_int_) - (0, 10, 20),
+- __FavoriteAnimalBonus__ (_int_) - (-20, 20, 70),
+- __FuzzyFactor__ (_int_) - (20, 50),
+- __ShowQualityMult__ (_int_) - (-2, 1, 20, 4, 6),
+- __TrickPopularityMult__ (_float_) - (-0.1, 0.3),
+#### Children:
+- [Reaction](#reaction)
+
+---
+
+## ZTAIShowEvent
+#### Attributes:
+- __ExpireWithTask__ (_bool_) - (false, true),
+- __Interrupt__ (_bool_) - (false, true),
+- __Name__ (_string_) - (DefaultTask_Aardvark, DefaultTask_Actor, FastWander, Interact_Player, WanderWater),
+- __Timeout__ (_int_) - (-1, 15, 180, 30, 59),
 #### Children:
 - None
 
@@ -878,12 +1425,24 @@ Can be called from [ZTBehSplashGuest](#ztbehsplashguest) and more.
 ---
 
 ## ZTActionInfo
+#### Attributes:
+- __locID__ (_string_) - (guestthoughts:AnimalHappy, guestthoughts:AnimalUnhappy, guestthoughts:AnimalVeryHappy, guestthoughts:AnimalVeryUnhappy, null:null),
+- __timeout__ (_float_) - (0.0f, 15, 30, 60),
+- __useObjectName__ (_bool_) - (true),
+- __useTargetContents__ (_bool_) - (true),
+- __useTargetName__ (_bool_) - (true),
+#### Children:
+- None
+
+---
+
+## ZTActionInfo
 This info is shown in the entity's info panel.
 #### Attributes:
 - __locID__ (_string_) - The info to be raised in the info bar of the entity, may include placeholders.
-- __*useTargetName__ (_bool_) - Will appear instead of `%s` or `%1s` in the locID.
-- __*useTargetContents__ (_bool_) - Will appear instead of `%2s` in the locID.
-- __*useObjectName__ (_bool_) - Will appear instead of `%s` or `%1s` in the locID.
+- * __useTargetName__ (_bool_) - Will appear instead of `%s` or `%1s` in the locID.
+- * __useTargetContents__ (_bool_) - Will appear instead of `%2s` in the locID.
+- * __useObjectName__ (_bool_) - Will appear instead of `%s` or `%1s` in the locID.
 #### Children:
 - None
 
@@ -901,6 +1460,17 @@ This info is shown in the entity's info panel.
 ## ZTBehAddSubjectAsDiseaseTarget
 #### Attributes:
 - __attributes__ (_string_) - (b_Carnivore=true),
+- __disease__ (_string_) - (Bloodlust, CatScratchFever, PinkElephantDisease),
+- __immediate__ (_bool_) - (false, true),
+- __types__ (_string_) - (Elephantidae, Elephantidae Mammutidae, Felidae, animal),
+#### Children:
+- None
+
+---
+
+## ZTBehAddSubjectAsDiseaseTarget
+#### Attributes:
+- __attributes__ (_string_) - (b_Carnivore=true),
 - __disease__ (_string_) - (Bloodlust, PinkElephantDisease),
 - __immediate__ (_bool_) - (false, true),
 - __types__ (_string_) - (Elephantidae, animal),
@@ -911,7 +1481,42 @@ This info is shown in the entity's info panel.
 
 ## ZTBehChangeWaterDirtiness
 #### Attributes:
+- __Clean__ (_bool_) - (true),
 - __Delta__ (_int_) - (750),
+#### Children:
+- None
+
+---
+
+## ZTBehChangeWaterDirtiness
+#### Attributes:
+- __Delta__ (_int_) - (750),
+#### Children:
+- None
+
+---
+
+## ZTBehCureDisease
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## ZTBehDigArtifact
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## ZTBehDockFence
+#### Attributes:
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
+- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
 #### Children:
 - None
 
@@ -928,12 +1533,23 @@ This info is shown in the entity's info panel.
 ---
 
 ## ZTBehDockTankWall
+#### Attributes:
+- __depthBelowWater__ (_int_) - (1, 2),
+- __heightAboveGround__ (_int_) - (1),
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
+#### Children:
+- None
+
+---
+
+## ZTBehDockTankWall
 Subject interacts with a tank wall. Apparently always called from "inside" [ZTBehTargetFence](#ztbehtargetfence).
 #### Attributes:
 - __subjectNode__ (_string_) - Name of the subject's dock node, eg. `Node_Mouth`, `Floor`...
-- __*locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
+- * __locoSpeed__ (_string_) - Which locoSpeed to use (referred in main XML). Default is `slow`.
 - __heightAboveGround__ (_int_) - Measured from the outside ground, not tank floor.
-- __*depthBelowWater__ (_int_) - Measured from the water surface.
+- * __depthBelowWater__ (_int_) - Measured from the water surface.
 #### Children:
 - None
 
@@ -955,11 +1571,47 @@ Subject interacts with a tank wall. Apparently always called from "inside" [ZTBe
 
 ---
 
+## ZTBehDockWater
+#### Attributes:
+- __drinkDepth__ (_float_) - (.3, .4),
+- __interpolationDistance__ (_float_) - (0.15, 0.5, 1, 2, 9.0),
+- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
+- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
+#### Children:
+- None
+
+---
+
+## ZTBehEconomy
+#### Attributes:
+- __general__ (_bool_) - (true),
+- __transactionName__ (_string_) - (add_user, destroy, donate, getCash, remove_user),
+#### Children:
+- None
+
+---
+
 ## ZTBehEconomy
 #### Attributes:
 - __transactionName__ (_string_) - (destroy, donate),
 #### Children:
 - None
+
+---
+
+## ZTBehExitTankGate
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## ZTBehFeedback
+#### Attributes:
+- None
+#### Children:
+- [ZTFeedbackData](#ztfeedbackdata)
 
 ---
 
@@ -972,9 +1624,31 @@ Container of [ZTFeedbackData](#ztfeedbackdata).
 
 ---
 
+## ZTBehFindArtifact
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
 ## ZTBehKickOffRider
 #### Attributes:
 - None
+#### Children:
+- None
+
+---
+
+## ZTBehMorph
+#### Attributes:
+- __NameIt__ (_bool_) - (true),
+- __initScale__ (_float_) - (0.4, 0.45, 0.50, 0.55, 1),
+- __morphEntity__ (_string_) - (AlligatorChinese_Egg, AnkylosaurusNest_Egg, BirdElephant_Egg, subject, target),
+- __morphFade__ (_bool_) - (true),
+- __morphPeriod__ (_int_) - (1, 10, 100, 2, 300),
+- __morphScale__ (_bool_) - (true),
+- __morphTargetEntityType__ (_string_) - (Aardvark_Adult_F, Aardvark_Juvenile_F, Aardvark_Juvenile_M, Carcass_Meat, TermiteMound_Insects_Broken),
 #### Children:
 - None
 
@@ -1000,6 +1674,30 @@ Morphs the subject into another entity, either maintaining or discarding its ini
 
 ---
 
+## ZTBehPlaceTarget
+#### Attributes:
+- __container__ (_string_) - (foodprop, head_inventory, lefthandobject, mouth, righthand),
+- __targetBeh__ (_string_) - (PlaceFood),
+- __targetType__ (_string_) - (Guest, s_KeeperDrinkType, s_KeeperEatType),
+#### Children:
+- None
+
+---
+
+## ZTBehShowEvent
+#### Attributes:
+- __ExpireWithTask__ (_bool_) - (false, true),
+- __Interrupt__ (_bool_) - (false, true),
+- __Name__ (_string_) - (DefaultTask_Aardvark, DefaultTask_Actor, FastWander, Interact_Player, WanderWater),
+- __Priority__ (_int_) - (1, 10, 100, 5, 900),
+- __Timein__ (_float_) - (1004.21, 30, 341.05, 5, 971.84),
+- __Timeout__ (_int_) - (-1, 15, 180, 30, 59),
+- __Type__ (_string_) - (AnimalEvent),
+#### Children:
+- None
+
+---
+
 ## ZTBehShowEvent
 #### Attributes:
 - __Type__ (_string_) - Always `AnimalEvent`.
@@ -1015,12 +1713,26 @@ Morphs the subject into another entity, either maintaining or discarding its ini
 ---
 
 ## ZTBehSplashGuest
+#### Attributes:
+- __groundFit__ (_bool_) - (false),
+- __interruptFlag__ (_bool_) - (false, true),
+- __splashFromWaterSurface__ (_bool_) - (false),
+- __splashName__ (_string_) - (directed_large, directed_medium, directed_small),
+- __splashVector__ (_string_) - (-1 0 0, 0 1 0, 1 0 0),
+- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
+#### Children:
+- [BFAITokenList](#bfaitokenlist)
+- [ZTAIShowEvent](#ztaishowevent)
+
+---
+
+## ZTBehSplashGuest
 Subject splashes guests, plays a particle system and triggers a reaction in guests.
 #### Attributes:
 - __targetAnim__ (_string_) - The name of the anim that should be played.
-- __*interruptFlag__ (_bool_) - Allow interruptions? Default is `false`.
+- * __interruptFlag__ (_bool_) - Allow interruptions? Default is `false`.
 - __splashVector__ (_matrix3x3_) - Always `1 0 0, -1 0 0, 0 1 0`.
-- __*groundFit__ (_bool_) - Fit to ground according to leg nodes? Default is `true`.
+- * __groundFit__ (_bool_) - Fit to ground according to leg nodes? Default is `true`.
 - __splashFromWaterSurface__ (_bool_) - Default is `true`.
 - __splashName__ (_string_) - The name of the particle effect that should be played, eg. `directed_large`, `directed_medium`, `directed_small`.
 #### Children:
@@ -1049,6 +1761,16 @@ Subject splashes guests, plays a particle system and triggers a reaction in gues
 ---
 
 ## ZTBehTargetFence
+#### Attributes:
+- __behSet__ (_string_) - (Bleat, Dig, DustBathe, FailureSet, TreadWater_Idle),
+- __fenceType__ (_string_) - (tankwallsegment),
+- __searchDistance__ (_int_) - (6),
+#### Children:
+- None
+
+---
+
+## ZTBehTargetFence
 Makes the subject find a fence.
 #### Attributes:
 - __behSet__ (_string_) - This behSet is used to dock to the tank wall, and will usually contain [ZTBehDockTankWall](#ztbehdocktankwall).
@@ -1067,12 +1789,76 @@ Makes the subject find a fence.
 
 ---
 
+## ZTBehTeleportToLoc
+Only used in `MC.tsk`'s `ReplaceProp` task.
+#### Attributes:
+- __resetProp__ (_bool_) - Default is `false`.
+#### Children:
+- None
+
+#### Example:
+```xml
+ <ZTBehTeleportToLoc resetProp="true"/>
+```
+
+---
+
+## ZTBehTestTargetPos
+#### Attributes:
+- __illegalBeh__ (_string_) - (KillTarget),
+- __legalBeh__ (_string_) - (MWFailFeedback, ZKFailCleanWaterFeedback, ZKFailFeedback),
+#### Children:
+- None
+
+---
+
+## ZTBehTour
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## ZTBehUsePortal
+#### Attributes:
+- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
+- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
+#### Children:
+- None
+
+---
+
 ## ZTBehUsePortal
 #### Attributes:
 - __locoSpeed__ (_string_) - (charge, evade, fast, medium, slow),
 - __targetAnim__ (_string_) - (Fly_Ahead, Fly_Call, Stand_Idle, Swim_Ahead, TreadWaterSub_Idle),
 #### Children:
 - None
+
+---
+
+## ZTBehViewAnimals
+#### Attributes:
+- __dockVPBeh__ (_string_) - (GotoPathVP),
+- __retarget__ (_bool_) - (false),
+- __viewMeterStart__ (_int_) - (200),
+- __viewMeterStartMax__ (_int_) - (250),
+- __viewMeterStartMin__ (_int_) - (150),
+#### Children:
+- [emoteSets](#emotesets)
+
+---
+
+## ZTBehViewEvent
+#### Attributes:
+- __edDonate__ (_string_) - (f_EdDonNormal),
+- __edValue__ (_string_) - (f_EdNormal),
+- __targetType__ (_string_) - (Guest, s_KeeperDrinkType, s_KeeperEatType),
+- __viewKey__ (_string_) - (DPos_5, Neg_10, Neg_2, Neg_3, Pos_2),
+- __viewRadius__ (_int_) - (20),
+#### Children:
+- [ZTFeedbackData](#ztfeedbackdata)
 
 ---
 
@@ -1085,6 +1871,24 @@ Container of [ZTFeedbackData](#ztfeedbackdata).
 
 ---
 
+## ZTBehWatchShow
+#### Attributes:
+- None
+#### Children:
+- [EventScoring](#eventscoring)
+
+---
+
+## ZTEmoticonInfo
+#### Attributes:
+- __emoticonEntityNode__ (_string_) - (Bip01 Head),
+- __emoticonName__ (_string_) - (EmoteAngry, EmoteAnimalExerciseGood, EmoteAnimalExerciseVeryGood, EmoteAnimalHungerGood, EmoteAnimalThirstGood),
+- __emoticonScale__ (_float_) - (0.5, 0.75, 1.5),
+#### Children:
+- None
+
+---
+
 ## ZTEmoticonInfo
 This raises an emoticon over the subject entity.
 #### Attributes:
@@ -1093,6 +1897,17 @@ This raises an emoticon over the subject entity.
 - __emoticonEntityNode__ (_string_) - Name of the emoticon's parent node, eg. `Bip01 Head`.
 #### Children:
 - None
+
+---
+
+## ZTFeedbackData
+#### Attributes:
+- None
+#### Children:
+- [ZTActionInfo](#ztactioninfo)
+- [ZTEmoticonInfo](#ztemoticoninfo)
+- [ZTMessageInfo](#ztmessageinfo)
+- [ZTThoughtInfo](#ztthoughtinfo)
 
 ---
 
@@ -1110,15 +1925,46 @@ May be used from inside a [ZTBehFeedback](#ztbehfeedback) or a [ZTBehViewEvent](
 
 ## ZTMessageInfo
 #### Attributes:
+- __filterAttribute__ (_string_) - (b_Rampage EQ true),
+- __global__ (_bool_) - (false, true),
+- __interval__ (_int_) - (30, 60),
+- __locID__ (_string_) - (guestthoughts:AnimalHappy, guestthoughts:AnimalUnhappy, guestthoughts:AnimalVeryHappy, guestthoughts:AnimalVeryUnhappy, null:null),
+- __priority__ (_int_) - (-1, 0, 1, 10, 2),
+- __timeout__ (_float_) - (0.0f, 15, 30, 60),
+- __tolerance__ (_int_) - (1),
+- __useEntityName__ (_bool_) - (true),
+- __useTargetName__ (_bool_) - (true),
+#### Children:
+- None
+
+---
+
+## ZTMessageInfo
+#### Attributes:
 - __locID__ (_string_) - The info to be raised in the info bar of the entity.
-- __*priority__ (_int_) - This message's relative priority.
-- __*timeout__ (_int_) - How soon should this message disappear?
-- __*interval__ (_int_) - how much time must pass until the message is raised again?
-- __*tolerance__ (_int_) - Unknown.
-- __*global__ (_bool_) - Not sure. Either (false, true)
-- __*useEntityName__ (_bool_) - Default is `false`.
-- __*useTargetName__ (_bool_) - Default is `false`
-- __*filterAttribute__ (_string_) - Rare, eg. `b_Rampage EQ true`
+- * __priority__ (_int_) - This message's relative priority.
+- * __timeout__ (_int_) - How soon should this message disappear?
+- * __interval__ (_int_) - how much time must pass until the message is raised again?
+- * __tolerance__ (_int_) - Unknown.
+- * __global__ (_bool_) - Not sure. Either (false, true)
+- * __useEntityName__ (_bool_) - Default is `false`.
+- * __useTargetName__ (_bool_) - Default is `false`
+- * __filterAttribute__ (_string_) - Rare, eg. `b_Rampage EQ true`
+#### Children:
+- None
+
+---
+
+## ZTThoughtInfo
+#### Attributes:
+- __global__ (_bool_) - (false, true),
+- __locID__ (_string_) - (guestthoughts:AnimalHappy, guestthoughts:AnimalUnhappy, guestthoughts:AnimalVeryHappy, guestthoughts:AnimalVeryUnhappy, null:null),
+- __priority__ (_int_) - (-1, 0, 1, 10, 2),
+- __timeout__ (_float_) - (0.0f, 15, 30, 60),
+- __useTargetName__ (_bool_) - (true),
+- __useTargetObject__ (_bool_) - (true),
+- __useTargetSpecies__ (_bool_) - (true),
+- __useTargetTarget__ (_bool_) - (true),
 #### Children:
 - None
 
@@ -1127,13 +1973,21 @@ May be used from inside a [ZTBehFeedback](#ztbehfeedback) or a [ZTBehViewEvent](
 ## ZTThoughtInfo
 #### Attributes:
 - __locID__ (_string_) - The info to be raised in the info bar of the entity.
-- __*priority__ (_int_) - This message's relative priority.
-- __*timeout__ (_int_) - How soon should this message disappear?
-- __*global__ (_bool_) - Not sure. Either (false, true)
-- __*useTargetName__ (_bool_) - Will appear instead of `%s` in the locID.
-- __*useTargetTarget__ (_bool_) - Will appear instead of `%s` in the locID.
-- __*useTargetSpecies__ (_bool_) - Will appear instead of `%s` in the locID.
-- __*useTargetObject__ (_bool_) - Will appear instead of `%s` in the locID.
+- * __priority__ (_int_) - This message's relative priority.
+- * __timeout__ (_int_) - How soon should this message disappear?
+- * __global__ (_bool_) - Not sure. Either (false, true)
+- * __useTargetName__ (_bool_) - Will appear instead of `%s` in the locID.
+- * __useTargetTarget__ (_bool_) - Will appear instead of `%s` in the locID.
+- * __useTargetSpecies__ (_bool_) - Will appear instead of `%s` in the locID.
+- * __useTargetObject__ (_bool_) - Will appear instead of `%s` in the locID.
+#### Children:
+- None
+
+---
+
+## animTable
+#### Attributes:
+- None
 #### Children:
 - None
 
@@ -1149,6 +2003,14 @@ Switches between different animations in a [BFBehAnimateSwitch](#bfbehanimateswi
 ---
 
 ## avoidEntityTypes
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## avoidEntityTypes
 Holds a list of entities that should be avoided in [BFBehWander](#bfbehwander) and [BFBehEvasion](#bfbehevasion) sets.
 #### Attributes:
 - None
@@ -1158,11 +2020,74 @@ Holds a list of entities that should be avoided in [BFBehWander](#bfbehwander) a
 ---
 
 ## behaviorTable
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## behaviorTable
 May be used from inside a [BFBehLocoSwitchSet](#bfbehlocoswitchset) or a [BFBehAnimSwitchSet](#bfbehanimswitchset).
 #### Attributes:
 - None
 #### Children:
 - ["behaviorTableEntry"](#behaviortableentry)
+
+---
+
+## behaviors
+#### Attributes:
+- None
+#### Children:
+- [BFBehAnimSwitchSet](#bfbehanimswitchset)
+- [BFBehAnimate](#bfbehanimate)
+- [BFBehAnimateRandom](#bfbehanimaterandom)
+- [BFBehAnimateSwitch](#bfbehanimateswitch)
+- [BFBehAnimateTAP](#bfbehanimatetap)
+- [BFBehAttachObject](#bfbehattachobject)
+- [BFBehDetachObject](#bfbehdetachobject)
+- [BFBehDock](#bfbehdock)
+- [BFBehDockNow](#bfbehdocknow)
+- [BFBehDockQueue](#bfbehdockqueue)
+- [BFBehDockRadial](#bfbehdockradial)
+- [BFBehDockSpline](#bfbehdockspline)
+- [BFBehDockTAP](#bfbehdocktap)
+- [BFBehEnter](#bfbehenter)
+- [BFBehEscapeObstacle](#bfbehescapeobstacle)
+- [BFBehEvasion](#bfbehevasion)
+- [BFBehFaceTarget](#bfbehfacetarget)
+- [BFBehFollowEntity](#bfbehfollowentity)
+- [BFBehHeadLook](#bfbehheadlook)
+- [BFBehHide](#bfbehhide)
+- [BFBehKill](#bfbehkill)
+- [BFBehLocoSwitchSet](#bfbehlocoswitchset)
+- [BFBehMove](#bfbehmove)
+- [BFBehPlaySet](#bfbehplayset)
+- [BFBehPursuit](#bfbehpursuit)
+- [BFBehRandomSet](#bfbehrandomset)
+- [BFBehScript](#bfbehscript)
+- [BFBehSendToken](#bfbehsendtoken)
+- [BFBehSendTrigger](#bfbehsendtrigger)
+- [BFBehSetAttribute](#bfbehsetattribute)
+- [BFBehSpawn](#bfbehspawn)
+- [BFBehSyncSet](#bfbehsyncset)
+- [BFBehWaitQueue](#bfbehwaitqueue)
+- [BFBehWander](#bfbehwander)
+- [BFBehWhap](#bfbehwhap)
+- [ZTBehCureDisease](#ztbehcuredisease)
+- [ZTBehDigArtifact](#ztbehdigartifact)
+- [ZTBehDockFence](#ztbehdockfence)
+- [ZTBehDockTankWall](#ztbehdocktankwall)
+- [ZTBehEconomy](#ztbeheconomy)
+- [ZTBehFeedback](#ztbehfeedback)
+- [ZTBehMorph](#ztbehmorph)
+- [ZTBehShowEvent](#ztbehshowevent)
+- [ZTBehSplashGuest](#ztbehsplashguest)
+- [ZTBehTargetFence](#ztbehtargetfence)
+- [ZTBehViewAnimals](#ztbehviewanimals)
+- [ZTBehViewEvent](#ztbehviewevent)
+- [ZTBehWatchShow](#ztbehwatchshow)
 
 ---
 
@@ -1212,6 +2137,22 @@ This is the top-level container for BEH behavior. Note that not all structures c
 
 ---
 
+## emoteSets
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## randomAnims
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
 ## randomAnims
 #### Attributes:
 - None
@@ -1224,7 +2165,71 @@ This is the top-level container for BEH behavior. Note that not all structures c
 #### Attributes:
 - None
 #### Children:
+- None
+
+---
+
+## randomSets
+#### Attributes:
+- None
+#### Children:
 - ["randomSetsEntry"](#randomsetsentry)
+
+---
+
+## t_Bullied
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## t_Childless
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## t_ChildlessFertility
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## t_Flee
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## t_RivalScared
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## t_ScreechAt
+#### Attributes:
+- None
+#### Children:
+- None
+
+---
+
+## textkeys
+#### Attributes:
+- None
+#### Children:
+- None
 
 ---
 
@@ -1233,4 +2238,12 @@ This is the top-level container for BEH behavior. Note that not all structures c
 - None
 #### Children:
 - ["textkeysEntry"](#textkeysentry)
+
+---
+
+## userData
+#### Attributes:
+- __invalidateHabitat__ (_bool_) - (true),
+#### Children:
+- None
 
