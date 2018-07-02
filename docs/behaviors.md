@@ -1155,24 +1155,20 @@ This info is shown in the entity's info panel.
 ---
 
 ## ZTBehAddSubjectAsDiseaseTarget
+Usually called from an [BFBehExecTask](#bfbehexectask).
 #### Attributes:
-- __attributes__ (_string_) - (b_Carnivore=true),
-- __disease__ (_string_) - (Bloodlust, CatScratchFever, PinkElephantDisease),
-- __immediate__ (_bool_) - (false, true),
-- __types__ (_string_) - (Elephantidae, Elephantidae Mammutidae, Felidae, animal),
+- __disease__ (_string_) - Type of disease, eg. `Bloodlust`, `CatScratchFever`, `PinkElephantDisease`
+- __types__ (_string_ or _list_ of _string_) - Entity types that can be infected, eg. `Elephantidae`, `Elephantidae Mammutidae`.
+* __attributes__ (_string_) - Qualifier for __types__, eg. `b_Carnivore=true`.
+- __immediate__ (_bool_) - Are the types infected immediately?
 #### Children:
 - None
 
----
-
-## ZTBehAddSubjectAsDiseaseTarget
-#### Attributes:
-- __attributes__ (_string_) - (b_Carnivore=true),
-- __disease__ (_string_) - (Bloodlust, PinkElephantDisease),
-- __immediate__ (_bool_) - (false, true),
-- __types__ (_string_) - (Elephantidae, animal),
-#### Children:
-- None
+#### Example:
+```xml
+<ZTBehAddSubjectAsDiseaseTarget disease="Bloodlust" types="animal" attributes="b_Carnivore=true" immediate="true"/>
+<ZTBehAddSubjectAsDiseaseTarget disease="PinkElephantDisease" types="Elephantidae Mammutidae" immediate="false"/>
+```
 
 ---
 
@@ -1185,27 +1181,32 @@ This info is shown in the entity's info panel.
 
 ---
 
-## ZTBehChangeWaterDirtiness
-#### Attributes:
-- __Delta__ (_int_) - (750),
-#### Children:
-- None
-
----
-
 ## ZTBehCureDisease
+Lets the subject (eg. `Keeper`) cure (not heal) a diseased target.
 #### Attributes:
 - None
 #### Children:
 - None
+
+#### Example:
+```xml
+ <ZTBehCureDisease/>
+```
 
 ---
 
 ## ZTBehDigArtifact
+The subject (`Paleontologist`) excavates a fossil site (`fossilmarker`) target previously marked with [ZTBehFindArtifact](#ztbehfindartifact).
 #### Attributes:
 - None
 #### Children:
 - None
+
+#### Example:
+```xml
+ <BFBehAnimate targetAnim="Stand_Excavate"/>
+ <ZTBehDigArtifact/>
+```
 
 ---
 
@@ -1214,27 +1215,6 @@ This info is shown in the entity's info panel.
 - __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
 - __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
 - __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
-#### Children:
-- None
-
----
-
-## ZTBehDockFence
-#### Attributes:
-- __locoSpeed__ (_string_) - (charge, evade, fast, medium, slow),
-- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_FightOffset, p_PreyOffset),
-- __targetAnim__ (_string_) - (Fly_Ahead, Fly_Call, Stand_Idle, Swim_Ahead, TreadWaterSub_Idle),
-#### Children:
-- None
-
----
-
-## ZTBehDockTankWall
-#### Attributes:
-- __depthBelowWater__ (_int_) - (1, 2),
-- __heightAboveGround__ (_int_) - (1),
-- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
-- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
 #### Children:
 - None
 
@@ -1268,29 +1248,10 @@ Subject interacts with a tank wall. Apparently always called from "inside" [ZTBe
 
 ---
 
-## ZTBehDockWater
-#### Attributes:
-- __drinkDepth__ (_float_) - (.3, .4),
-- __interpolationDistance__ (_float_) - (0.15, 0.5, 1, 2, 9.0),
-- __subjectNode__ (_string_) - (Floor, Node_Mouth, Poop, p_GroomNode, p_PreyOffset),
-- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
-#### Children:
-- None
-
----
-
 ## ZTBehEconomy
 #### Attributes:
 - __general__ (_bool_) - (true),
 - __transactionName__ (_string_) - (add_user, destroy, donate, getCash, remove_user),
-#### Children:
-- None
-
----
-
-## ZTBehEconomy
-#### Attributes:
-- __transactionName__ (_string_) - (destroy, donate),
 #### Children:
 - None
 
@@ -1305,14 +1266,6 @@ Subject interacts with a tank wall. Apparently always called from "inside" [ZTBe
 ---
 
 ## ZTBehFeedback
-#### Attributes:
-- None
-#### Children:
-- [ZTFeedbackData](#ztfeedbackdata)
-
----
-
-## ZTBehFeedback
 Container of [ZTFeedbackData](#ztfeedbackdata).
 #### Attributes:
 - None
@@ -1322,30 +1275,23 @@ Container of [ZTFeedbackData](#ztfeedbackdata).
 ---
 
 ## ZTBehFindArtifact
+The subject (`Paleontologist`) makes a hidden `FossilSite` target visible.
 #### Attributes:
 - None
 #### Children:
 - None
 
+#### Example:
+```xml
+ <BFBehPlaySet behSet="MarkFossil"/>
+ <ZTBehFindArtifact/>
+```
+	 
 ---
 
 ## ZTBehKickOffRider
 #### Attributes:
 - None
-#### Children:
-- None
-
----
-
-## ZTBehMorph
-#### Attributes:
-- __NameIt__ (_bool_) - (true),
-- __initScale__ (_float_) - (0.4, 0.45, 0.50, 0.55, 1),
-- __morphEntity__ (_string_) - (AlligatorChinese_Egg, AnkylosaurusNest_Egg, BirdElephant_Egg, subject, target),
-- __morphFade__ (_bool_) - (true),
-- __morphPeriod__ (_int_) - (1, 10, 100, 2, 300),
-- __morphScale__ (_bool_) - (true),
-- __morphTargetEntityType__ (_string_) - (Aardvark_Adult_F, Aardvark_Juvenile_F, Aardvark_Juvenile_M, Carcass_Meat, TermiteMound_Insects_Broken),
 #### Children:
 - None
 
@@ -1372,6 +1318,7 @@ Morphs the subject into another entity, either maintaining or discarding its ini
 ---
 
 ## ZTBehPlaceTarget
+Very similar to [BFBehSpawn](#bfbehspawn), but only used by keepers to place food.
 #### Attributes:
 - __container__ (_string_) - (foodprop, head_inventory, lefthandobject, mouth, righthand),
 - __targetBeh__ (_string_) - (PlaceFood),
@@ -1379,19 +1326,10 @@ Morphs the subject into another entity, either maintaining or discarding its ini
 #### Children:
 - None
 
----
-
-## ZTBehShowEvent
-#### Attributes:
-- __ExpireWithTask__ (_bool_) - (false, true),
-- __Interrupt__ (_bool_) - (false, true),
-- __Name__ (_string_) - (DefaultTask_Aardvark, DefaultTask_Actor, FastWander, Interact_Player, WanderWater),
-- __Priority__ (_int_) - (1, 10, 100, 5, 900),
-- __Timein__ (_float_) - (1004.21, 30, 341.05, 5, 971.84),
-- __Timeout__ (_int_) - (-1, 15, 180, 30, 59),
-- __Type__ (_string_) - (AnimalEvent),
-#### Children:
-- None
+#### Example:
+```xml
+ <ZTBehPlaceTarget container="food" targetType="s_KeeperEatType" targetBeh="PlaceFood"/>
+```
 
 ---
 
@@ -1444,29 +1382,11 @@ Subject splashes guests, plays a particle system and triggers a reaction in gues
 ---
 
 ## ZTBehTargetFence
-#### Attributes:
-- __behSet__ (_string_) - (Bleat, Dig, DustBathe, FailureSet, TreadWater_Idle),
-- __fenceType__ (_string_) - (tankwallsegment),
-- __searchDistance__ (_int_) - (6),
-#### Children:
-- None
-
----
-
-## ZTBehTargetFence
 Makes the subject find a fence.
 #### Attributes:
 - __behSet__ (_string_) - This behSet is used to dock to the tank wall, and will usually contain [ZTBehDockTankWall](#ztbehdocktankwall).
 - __fenceType__ (_string_) - Entity subclass of fences, eg. `tankwallsegment`.
 - __searchDistance__ (_int_) - How far the subject may travel to find a fence.
-#### Children:
-- None
-
----
-
-## ZTBehTeleportToLoc
-#### Attributes:
-- __resetProp__ (_bool_) - (true),
 #### Children:
 - None
 
@@ -1487,26 +1407,23 @@ Only used in `MC.tsk`'s `ReplaceProp` task.
 ---
 
 ## ZTBehTestTargetPos
+Apparently only used in failure [BFBehExecTask](#bfbehexectask).
 #### Attributes:
 - __illegalBeh__ (_string_) - (KillTarget),
 - __legalBeh__ (_string_) - (MWFailFeedback, ZKFailCleanWaterFeedback, ZKFailFeedback),
 #### Children:
 - None
 
+#### Example:
+```xml
+<ZTBehTestTargetPos legalBeh="ZKFailFeedback" illegalBeh="KillTarget"/>
+```
+
 ---
 
 ## ZTBehTour
 #### Attributes:
 - None
-#### Children:
-- None
-
----
-
-## ZTBehUsePortal
-#### Attributes:
-- __locoSpeed__ (_string_) - (burrow, evade, fast, medium, slow),
-- __targetAnim__ (_string_) - (LieSide_Idle, Lie_Idle, SleepCurl_Idle, Stand_Idle, TreadWater_Idle),
 #### Children:
 - None
 
@@ -1538,17 +1455,8 @@ Only used in `MC.tsk`'s `ReplaceProp` task.
 - __edDonate__ (_string_) - (f_EdDonNormal),
 - __edValue__ (_string_) - (f_EdNormal),
 - __targetType__ (_string_) - (Guest, s_KeeperDrinkType, s_KeeperEatType),
-- __viewKey__ (_string_) - (DPos_5, Neg_10, Neg_2, Neg_3, Pos_2),
-- __viewRadius__ (_int_) - (20),
-#### Children:
-- [ZTFeedbackData](#ztfeedbackdata)
-
----
-
-## ZTBehViewEvent
-Container of [ZTFeedbackData](#ztfeedbackdata).
-#### Attributes:
 - __viewKey__ (_string_) - Apparently a grading scale for the quality of the event, eg. `Pos_2`, `Pos_3`, `Neg_5`...
+- __viewRadius__ (_int_) - (20),
 #### Children:
 - [ZTFeedbackData](#ztfeedbackdata)
 
@@ -1559,16 +1467,6 @@ Container of [ZTFeedbackData](#ztfeedbackdata).
 - None
 #### Children:
 - [EventScoring](#eventscoring)
-
----
-
-## ZTEmoticonInfo
-#### Attributes:
-- __emoticonEntityNode__ (_string_) - (Bip01 Head),
-- __emoticonName__ (_string_) - (EmoteAngry, EmoteAnimalExerciseGood, EmoteAnimalExerciseVeryGood, EmoteAnimalHungerGood, EmoteAnimalThirstGood),
-- __emoticonScale__ (_float_) - (0.5, 0.75, 1.5),
-#### Children:
-- None
 
 ---
 
@@ -1584,41 +1482,14 @@ This raises an emoticon over the subject entity.
 ---
 
 ## ZTFeedbackData
-#### Attributes:
-- None
-#### Children:
-- [ZTActionInfo](#ztactioninfo)
-- [ZTEmoticonInfo](#ztemoticoninfo)
-- [ZTMessageInfo](#ztmessageinfo)
-- [ZTThoughtInfo](#ztthoughtinfo)
-
----
-
-## ZTFeedbackData
 May be used from inside a [ZTBehFeedback](#ztbehfeedback) or a [ZTBehViewEvent](#ztbehviewevent).
 #### Attributes:
 - None
 #### Children:
 - [ZTActionInfo](#ztactioninfo)
-- [ZTThoughtInfo](#ztthoughtinfo)
 - [ZTEmoticonInfo](#ztemoticoninfo)
 - [ZTMessageInfo](#ztmessageinfo)
-
----
-
-## ZTMessageInfo
-#### Attributes:
-- __filterAttribute__ (_string_) - (b_Rampage EQ true),
-- __global__ (_bool_) - (false, true),
-- __interval__ (_int_) - (30, 60),
-- __locID__ (_string_) - (guestthoughts:AnimalHappy, guestthoughts:AnimalUnhappy, guestthoughts:AnimalVeryHappy, guestthoughts:AnimalVeryUnhappy, null:null),
-- __priority__ (_int_) - (-1, 0, 1, 10, 2),
-- __timeout__ (_float_) - (0.0f, 15, 30, 60),
-- __tolerance__ (_int_) - (1),
-- __useEntityName__ (_bool_) - (true),
-- __useTargetName__ (_bool_) - (true),
-#### Children:
-- None
+- [ZTThoughtInfo](#ztthoughtinfo)
 
 ---
 
@@ -1640,21 +1511,6 @@ May be used from inside a [ZTBehFeedback](#ztbehfeedback) or a [ZTBehViewEvent](
 
 ## ZTThoughtInfo
 #### Attributes:
-- __global__ (_bool_) - (false, true),
-- __locID__ (_string_) - (guestthoughts:AnimalHappy, guestthoughts:AnimalUnhappy, guestthoughts:AnimalVeryHappy, guestthoughts:AnimalVeryUnhappy, null:null),
-- __priority__ (_int_) - (-1, 0, 1, 10, 2),
-- __timeout__ (_float_) - (0.0f, 15, 30, 60),
-- __useTargetName__ (_bool_) - (true),
-- __useTargetObject__ (_bool_) - (true),
-- __useTargetSpecies__ (_bool_) - (true),
-- __useTargetTarget__ (_bool_) - (true),
-#### Children:
-- None
-
----
-
-## ZTThoughtInfo
-#### Attributes:
 - __locID__ (_string_) - The info to be raised in the info bar of the entity.
 * __priority__ (_int_) - This message's relative priority.
 * __timeout__ (_int_) - How soon should this message disappear?
@@ -1663,14 +1519,6 @@ May be used from inside a [ZTBehFeedback](#ztbehfeedback) or a [ZTBehViewEvent](
 * __useTargetTarget__ (_bool_) - Will appear instead of `%s` in the locID.
 * __useTargetSpecies__ (_bool_) - Will appear instead of `%s` in the locID.
 * __useTargetObject__ (_bool_) - Will appear instead of `%s` in the locID.
-#### Children:
-- None
-
----
-
-## animTable
-#### Attributes:
-- None
 #### Children:
 - None
 
@@ -1686,27 +1534,11 @@ Switches between different animations in a [BFBehAnimateSwitch](#bfbehanimateswi
 ---
 
 ## avoidEntityTypes
-#### Attributes:
-- None
-#### Children:
-- None
-
----
-
-## avoidEntityTypes
 Holds a list of entities that should be avoided in [BFBehWander](#bfbehwander) and [BFBehEvasion](#bfbehevasion) sets.
 #### Attributes:
 - None
 #### Children:
 - ["avoidEntityTypesEntry"](#avoidentitytypesentry) (not documented)
-
----
-
-## behaviorTable
-#### Attributes:
-- None
-#### Children:
-- None
 
 ---
 
@@ -1720,6 +1552,7 @@ May be used from inside a [BFBehLocoSwitchSet](#bfbehlocoswitchset) or a [BFBehA
 ---
 
 ## behaviors
+This is the top-level container for BEH behavior. Note that not all structures can be called directly from top level. Some may be encapsulated in other components.
 #### Attributes:
 - None
 #### Children:
@@ -1774,61 +1607,7 @@ May be used from inside a [BFBehLocoSwitchSet](#bfbehlocoswitchset) or a [BFBehA
 
 ---
 
-## behaviors
-This is the top-level container for BEH behavior. Note that not all structures can be called directly from top level. Some may be encapsulated in other components.
-#### Attributes:
-- None
-#### Children:
-- [BFBehAnimSwitchSet](#bfbehanimswitchset)
-- [BFBehAnimate](#bfbehanimate)
-- [BFBehAnimateRandom](#bfbehanimaterandom)
-- [BFBehAnimateSwitch](#bfbehanimateswitch)
-- [BFBehAnimateTAP](#bfbehanimatetap)
-- [BFBehAttachObject](#bfbehattachobject)
-- [BFBehDetachObject](#bfbehdetachobject)
-- [BFBehDock](#bfbehdock)
-- [BFBehDockNow](#bfbehdocknow)
-- [BFBehDockRadial](#bfbehdockradial)
-- [BFBehDockSpline](#bfbehdockspline)
-- [BFBehDockTAP](#bfbehdocktap)
-- [BFBehEscapeObstacle](#bfbehescapeobstacle)
-- [BFBehEvasion](#bfbehevasion)
-- [BFBehFaceTarget](#bfbehfacetarget)
-- [BFBehFollowEntity](#bfbehfollowentity)
-- [BFBehHeadLook](#bfbehheadlook)
-- [BFBehKill](#bfbehkill)
-- [BFBehLocoSwitchSet](#bfbehlocoswitchset)
-- [BFBehMove](#bfbehmove)
-- [BFBehPlaySet](#bfbehplayset)
-- [BFBehPursuit](#bfbehpursuit)
-- [BFBehRandomSet](#bfbehrandomset)
-- [BFBehScript](#bfbehscript)
-- [BFBehSendToken](#bfbehsendtoken)
-- [BFBehSetAttribute](#bfbehsetattribute)
-- [BFBehSpawn](#bfbehspawn)
-- [BFBehSyncSet](#bfbehsyncset)
-- [BFBehWander](#bfbehwander)
-- [BFBehWhap](#bfbehwhap)
-- [ZTBehDockTankWall](#ztbehdocktankwall)
-- [ZTBehFeedback](#ztbehfeedback)
-- [ZTBehMorph](#ztbehmorph)
-- [ZTBehShowEvent](#ztbehshowevent)
-- [ZTBehSplashGuest](#ztbehsplashguest)
-- [ZTBehTargetFence](#ztbehtargetfence)
-- [ZTBehViewEvent](#ztbehviewevent)
-- [ZTBehViewEvent](#ztbehviewevent)
-
----
-
 ## emoteSets
-#### Attributes:
-- None
-#### Children:
-- None
-
----
-
-## randomAnims
 #### Attributes:
 - None
 #### Children:
@@ -1848,23 +1627,7 @@ This is the top-level container for BEH behavior. Note that not all structures c
 #### Attributes:
 - None
 #### Children:
-- None
-
----
-
-## randomSets
-#### Attributes:
-- None
-#### Children:
 - ["randomSetsEntry"](#randomsetsentry)
-
----
-
-## textkeys
-#### Attributes:
-- None
-#### Children:
-- None
 
 ---
 
