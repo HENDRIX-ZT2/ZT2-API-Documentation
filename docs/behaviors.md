@@ -1110,7 +1110,7 @@ Targets required for this [BFAITaskTemplate](#bfaitasktemplate).
 ---
 
 ## ZTAIShowEvent
-Can be called from [ZTBehSplashGuest](#ztbehsplashguest).
+Can be called from [ZTBehSplashGuest](#ztbehsplashguest). Not to be confused with [ZTBehShowEvent](#ztbehshowevent)!
 #### Attributes:
 - __Name__ (_string_) - Name of this event.
 - __interrupt__ (_bool_) - Either `true` or `false`.
@@ -1334,6 +1334,7 @@ Very similar to [BFBehSpawn](#bfbehspawn), but only used by keepers to place foo
 ---
 
 ## ZTBehShowEvent
+Not to be confused with [ZTAIShowEvent](#ztaishowevent)!
 #### Attributes:
 - __Type__ (_string_) - Always `AnimalEvent`.
 - __Name__ (_string_) - eg. ``...
@@ -1344,6 +1345,11 @@ Very similar to [BFBehSpawn](#bfbehspawn), but only used by keepers to place foo
 - __Timeout__ (_int_) - (30, 15, 5, 20, 10, ...),
 #### Children:
 - None
+
+#### Example:
+```xml
+ <ZTBehShowEvent Type="AnimalEvent" Name="TrickFailure" Priority="2" Interrupt="true" ExpireWithTask="true" Timein="1" Timeout="3"/>
+```
 
 ---
 
@@ -1430,12 +1436,17 @@ Apparently only used in failure [BFBehExecTask](#bfbehexectask).
 ---
 
 ## ZTBehUsePortal
+Lets the subject pass a tank portal to enter or exit a show tank.
 #### Attributes:
 - __locoSpeed__ (_string_) - (charge, evade, fast, medium, slow),
 - __targetAnim__ (_string_) - (Fly_Ahead, Fly_Call, Stand_Idle, Swim_Ahead, TreadWaterSub_Idle),
 #### Children:
 - None
 
+#### Example:
+```xml
+ <ZTBehUsePortal targetAnim="SwimSub_Ahead" locoSpeed="fast"/>
+```
 ---
 
 ## ZTBehViewAnimals
